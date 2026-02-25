@@ -42,6 +42,9 @@
       "electron",
       "esbuild",
       "simple-git-hooks"
+    ],
+    "ignoredBuiltDependencies": [
+      "@swc/core"
     ]
   },
   "simple-git-hooks": {
