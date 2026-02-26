@@ -8,6 +8,10 @@ const config = {
   },
   publish: null,
   npmRebuild: false,
+  win: {
+    signAndEditExecutable: false,
+    icon: 'logo.png',
+  },
   files: [
     'dist/main/**/*',
     'dist/preload/**/*',
