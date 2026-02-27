@@ -1,4 +1,4 @@
-<!-- src/renderer/src/views/(default)/_layout.vue -->
+<!-- src/render/src/views/(default)/_layout.vue -->
 <template>
   xxxxxxxxxxxxxx
   <div class="main-window-layout">

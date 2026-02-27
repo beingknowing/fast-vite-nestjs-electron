@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "jsx": "preserve",
-    "lib": [
-      "esnext",
-      "dom"
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    // "skipLibCheck": true,
+    "types": [],
+    "typeRoots": [
+      // "./node_modules/@types",
+      "./types"
     ],
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "baseUrl": "./",
     "paths": {
+      "@*": [
+        "src/render/*"
+      ],
       "@render/*": [
         "src/render/*"
       ],
@@ -19,22 +20,25 @@
         "src/main/*"
       ]
     },
-    "resolveJsonModule": true,
-    "types": [
-      "vite/client",
-      "./src/preload"
-    ],
-    "strict": false,
-    "noImplicitAny": false,
-    "noEmit": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.web.json"
+    }
+  ],
+  "exclude": [
+    "**/dist",
+    "**/build",
+    ".vscode",
+    "**/.git",
+    "**/build",
+    "cache",
+    "**/.vite/",
+    "**/node_modules"
+  ],
 }

@@ -27,7 +27,7 @@ import { AppService } from './app.service'
         ? process.env.DS_RENDERER_URL
         : `file://${join(app.getAppPath(), 'dist/render/index.html')}`
 
-      win.loadURL(URL)
+      win.loadURL(URL!)
 
       return { win }
     },

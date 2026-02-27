@@ -1,0 +1,31 @@
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
+  "include": [
+    "**/*.d.ts",
+    "src/render/**/*.vue",
+    "src/render/**/*.ts",
+    "**/*.ts",
+    "vite.config.mts",
+  ],
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "types": [
+      "vite/client",
+      "unplugin-auto-import/vite",
+      "unplugin-vue-router/client",
+    ],
+    "composite": true,
+    "baseUrl": "./",
+    // "skipLibCheck": true,
+  },
+  "exclude": [
+    "**/dist",
+    "**/build",
+    ".vscode",
+    "**/.git",
+    "**/build",
+    "cache",
+    "**/.vite/",
+    "**/node_modules"
+  ],
+}

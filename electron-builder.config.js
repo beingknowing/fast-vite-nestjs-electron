@@ -3,7 +3,7 @@ const isWindowsDomainEnvironment = process.platform === 'win32' && Boolean(
 )
 
 if (isWindowsDomainEnvironment) {
-  console.warn('⚠️ Detected Windows domain environment. Code signing will be disabled to avoid potential issues with domain policies.')
+  console.warn(' ⚠️  Detected Windows domain environment. Code signing will be disabled to avoid potential issues with domain policies.')
 }
 
 /**

@@ -1,184 +1,199 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView, RouterLink, useRoute } from 'vue-router'
+
+type NavLink = { label: string; to: string; description: string }
+
+const navLinks: NavLink[] = [
+  { label: '工单中心', to: '/ticket/ticket', description: '创建并提交新的 ServiceNow 工单' },
+  { label: '凭据管理', to: '/settings/credentials', description: '维护 Client ID、Secret 与主机地址' },
+  { label: '路由示例 · 一', to: '/routeTest/viewOne', description: '演示自动路由 ViewOne 页面' },
+  { label: '路由示例 · 二', to: '/routeTest/viewTwo', description: '演示自动路由 ViewTwo 页面' },
+]
+
+const route = useRoute()
 </script>
 
 <template>
-  <div class="app-container">
-    <header class="app-header">
-      <div class="logo-container">
-        <img alt="logo" src="./assets/logo.png" class="logo">
+  <div class="app-shell">
+    <aside class="nav-panel">
+      <div class="nav-brand">
+        <p class="eyebrow">Support Console</p>
+        <h1>Service Desk</h1>
+        <p class="nav-subtitle">左侧导航，右侧工作区</p>
       </div>
-      <p class="app-subtitle">
-        Modern desktop application built with Vite + NestJS + Electron
-      </p>
-    </header>
+      <nav class="nav-links">
+        <RouterLink
+          v-for="link in navLinks"
+          :key="link.to"
+          :to="link.to"
+          class="nav-link"
+          :class="{ 'is-active': route.path.startsWith(link.to) }"
+        >
+          <span class="nav-link__label">{{ link.label }}</span>
+          <span class="nav-link__desc">{{ link.description }}</span>
+        </RouterLink>
+      </nav>
+    </aside>
 
-    <main class="app-main">
-      <HelloWorld />
-    </main>
+    <section class="display-panel">
+      <!-- <header class="display-header">
+        <div>
+          <p class="eyebrow">Workspace</p> 
+        </div>
+      </header> -->
 
-    <footer class="app-footer">
-      <p>Fast Development · Efficient Build · Modern Experience</p>
-    </footer>
+      <div class="display-body">
+        <RouterView v-slot="{ Component }">
+          <component v-if="Component" :is="Component" class="display-component" />
+          <div v-else class="empty-state">
+            <h3>欢迎来到控制台</h3>
+            <p>请选择左侧导航开始工作，或新建一个工单页面。</p>
+          </div>
+        </RouterView>
+      </div>
+    </section>
   </div>
 </template>
 
-<style>
-* {
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap');
+
+:global(html, body, #app) {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  min-height: 100%;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  background: #050915;
+  color: #e2e8f0;
 }
 
-:root {
-  --primary-color: #6366f1;
-  --primary-hover: #4f46e5;
-  --secondary-color: #8b5cf6;
-  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --card-bg: rgba(255, 255, 255, 0.95);
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --border-color: #e2e8f0;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-#app {
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
   min-height: 100vh;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: var(--background);
-  background-attachment: fixed;
 }
 
-.app-container {
-  min-height: 100vh;
+.nav-panel {
+  background: linear-gradient(180deg, #0f172a 0%, #111827 70%);
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 32px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.app-header {
-  text-align: center;
-  margin-bottom: 3rem;
-  animation: fadeInDown 0.6s ease-out;
+.nav-brand h1 {
+  margin: 8px 0 4px;
+  font-size: 24px;
+  color: #ffffff;
 }
 
-.logo-container {
-  margin-bottom: 1.5rem;
-  display: inline-block;
+.nav-subtitle {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
 }
 
-.logo {
-  max-width: 300px;
-  height: auto;
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.nav-link {
   border-radius: 16px;
-  box-shadow: var(--shadow-xl);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  background-color: white;
+  padding: 16px;
+  text-decoration: none;
+  color: #d9e3ff;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.2s ease;
 }
 
-.logo:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+.nav-link__label {
+  font-weight: 600;
+  font-size: 15px;
 }
 
-.app-subtitle {
-  font-size: 1.125rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 400;
+.nav-link__desc {
+  font-size: 12px;
+  color: #94a3b8;
 }
 
-.tech-name {
-  font-weight: 700;
+.nav-link:hover {
+  transform: translateX(4px);
+  border-color: rgba(56, 189, 248, 0.7);
 }
 
-.tech-name.vite {
-  color: #646cff;
+.nav-link.is-active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  box-shadow: 0 15px 40px rgba(8, 47, 73, 0.45);
 }
 
-.tech-name.nestjs {
-  color: #e0234e;
+.display-panel {
+  background: #f5f7fb;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.tech-name.electron {
-  color: #47848f;
+.display-header {
+  background: #ffffff;
+  padding: 3px;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.1);
+  color: #0f172a;
 }
 
-.app-main {
+.display-header .lede {
+  margin-top: 8px;
+  color: #475569;
+}
+
+.display-body {
   flex: 1;
-  animation: fadeInUp 0.6s ease-out 0.2s both;
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 32px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
+  min-height: 0;
 }
 
-.app-footer {
+.display-component {
+  height: 100%;
+}
+
+.empty-state {
   text-align: center;
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  animation: fadeIn 0.6s ease-out 0.4s both;
+  color: #475569;
+  padding: 96px 24px;
 }
 
-.app-footer p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
+.empty-state h3 {
+  margin-bottom: 12px;
+  color: #0f172a;
+  font-size: 24px;
 }
 
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
+@media (max-width: 960px) {
+  .app-shell {
+    grid-template-columns: 1fr;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@media (max-width: 768px) {
-  .app-container {
-    padding: 1.5rem;
-  }
-
-  .app-subtitle {
-    font-size: 1rem;
-  }
-
-  .logo {
-    max-width: 250px;
+  .nav-panel {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 </style>
