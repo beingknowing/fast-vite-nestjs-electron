@@ -1,9 +1,17 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { routes } from 'vue-router/auto-routes'
+import {
+  createWebHistory,
+} from 'vue-router'
+// import { experimental_createRouter as createRouter } from 'vue-router/experimental'
+// import { resolver, handleHotUpdate } from 'vue-router/auto-resolver'
+import { createRouter } from 'vue-router'
+import { routes, handleHotUpdate } from 'vue-router/auto-routes'
 
-const router = createRouter({
-  history: createWebHashHistory(), // Electron 必须使用 Hash 模式
-  routes, // 这里是自动扫描生成的路由表
+export const router = createRouter({
+  history: createWebHistory(),
+  // resolver,
+  routes,
 })
 
-export default router
+if (import.meta.hot) {
+  handleHotUpdate(router)
+}

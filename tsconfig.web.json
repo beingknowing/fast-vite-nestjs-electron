@@ -6,17 +6,26 @@
     "src/render/**/*.ts",
     "**/*.ts",
     "vite.config.mts",
+    "./src/route-map.d.ts"
   ],
   "compilerOptions": {
-    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ESNext",
     "types": [
       "vite/client",
-      "unplugin-auto-import/vite",
-      "unplugin-vue-router/client",
+      "vue-router/volar/sfc-route-blocks",
+      "vue-router/volar/sfc-typed-router",
     ],
     "composite": true,
     "baseUrl": "./",
-    // "skipLibCheck": true,
+    "skipLibCheck": true,
+  },
+  "vueCompilerOptions": {
+    "plugins": [
+      "vue-router/volar/sfc-typed-router",
+      "vue-router/volar/sfc-route-blocks",
+    ],
   },
   "exclude": [
     "**/dist",

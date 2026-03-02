@@ -3,11 +3,6 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     // "skipLibCheck": true,
-    "types": [],
-    "typeRoots": [
-      // "./node_modules/@types",
-      "./types"
-    ],
     "baseUrl": "./",
     "paths": {
       "@*": [
@@ -21,7 +16,7 @@
       ]
     },
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
   },
   "references": [
     {

@@ -15,20 +15,20 @@
   },
   "dependencies": {
     "@doubleshot/nest-electron": "^0.2.11",
-    "@nestjs/common": "^11.1.13",
-    "@nestjs/core": "^11.1.13",
-    "@nestjs/microservices": "^11.1.13",
+    "@nestjs/common": "^11.1.14",
+    "@nestjs/core": "^11.1.14",
+    "@nestjs/microservices": "^11.1.14",
     "electron-store": "^11.0.2",
     "electron-unhandled": "^5.0.0",
-    "element-plus": "^2.13.2",
-    "i18next": "^25.8.6",
-    "i18next-vue": "^1.0.0",
+    "element-plus": "^2.13.3",
+    "i18next": "^25.8.13",
+    "i18next-vue": "^1.1.0",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
-    "vue": "^3.5.28",
-    "vue-i18n": "^9.1.9",
+    "vue": "^3.5.29",
+    "vue-i18n": "^9.14.5",
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
@@ -46,7 +46,6 @@
     "unplugin-auto-import": "^21.0.0",
     "unplugin-icons": "^23.0.1",
     "unplugin-vue-components": "^31.0.0",
-    "unplugin-vue-router": "^0.19.2",
     "vite": "7.3.1",
     "vite-plugin-doubleshot": "0.0.20",
     "vue-router": "^5.0.3",
@@ -57,7 +56,8 @@
       "@nestjs/core",
       "electron",
       "esbuild",
-      "simple-git-hooks"
+      "simple-git-hooks",
+      "vue-demi"
     ],
     "ignoredBuiltDependencies": [
       "@swc/core"

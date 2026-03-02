@@ -3,8 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import { VitePluginDoubleshot } from 'vite-plugin-doubleshot'
 
-import VueRouter from 'unplugin-vue-router/vite'
-
+import VueRouter from 'vue-router/vite'
+import { VueRouterAutoImports } from 'vue-router/unplugin'
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
@@ -17,8 +17,8 @@ export default defineConfig({
   root: join(__dirname, 'src/render'),
   plugins: [
     VueRouter({
-      routesFolder: 'src/render/views', // 扫描页面的目录
-      dts: 'types/typed-router.d.ts', // 自动生成类型定义文件
+      routesFolder: ['src/render/views'], // 扫描页面的目录
+      dts: 'src/route-map.d.ts',  // 自动生成类型定义文件
     }),
     AutoImport({
       include: [
@@ -29,7 +29,7 @@ export default defineConfig({
       ],
       imports: [
         'vue',
-        'vue-router',
+        VueRouterAutoImports,
         'pinia'
       ],
       eslintrc: {
