@@ -2,7 +2,9 @@
 import { ref } from 'vue'
 
 const { sendMsg: sendMsgToMainProcess, onReplyMsg } = window.electron
-
+window.electron.ipcRenderer.invoke('get-domain-user').then((userName) => {
+  console.log('Current domain user:', userName)
+})
 const log = ref('')
 const msg = ref('')
 const isSending = ref(false)

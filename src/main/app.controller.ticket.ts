@@ -5,7 +5,7 @@ import { Controller } from '@nestjs/common'
 import { Payload } from '@nestjs/microservices'
 import { of } from 'rxjs'
 import { AppService } from './app.service'
-import { TicketResponse, TicketType } from '../../types/orm_types'
+import type { TicketResponse, TicketType } from '../../types/orm_types'
 import { AppServiceTicket } from './app.service.ticket'
 import { AppServiceOS } from './app.service.os'
 
@@ -18,10 +18,12 @@ export class AppController {
     private readonly osservice: AppServiceOS
   ) { }
 
-  public async onTicketSubmit(data: TicketType): Promise<Observable<TicketResponse>> {
+  @IpcHandle('ticket')
+  public async onTicketSubmit(@Payload() data: TicketType): Promise<Observable<TicketResponse>> {
     return of(await this.ticketService.submitTicket(data))
   }
 
+  @IpcHandle('get-domain-user')
   public async getUserName(): Promise<Observable<string>> {
     return of(this.osservice.getUserName())
   }

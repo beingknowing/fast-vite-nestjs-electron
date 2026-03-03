@@ -6,7 +6,7 @@ import { Payload } from '@nestjs/microservices'
 import { of } from 'rxjs'
 import { AppService } from './app.service'
 import { AppServiceStore } from './app.service.store'
-import { CredentialState } from '../../types/orm_types'
+import type { CredentialState } from '../../types/orm_types'
 
 @Controller()
 export class AppController {
@@ -16,10 +16,12 @@ export class AppController {
     private readonly store: AppServiceStore
   ) { }
 
-  public async saveCredential(data: CredentialState): Promise<Observable<true>> {
+  @IpcHandle('saveCredential')
+  public async saveCredential(@Payload() data: CredentialState): Promise<Observable<true>> {
     return of((await this.store.saveCredential(data)))
   }
 
+  @IpcHandle('readCredential')
   public async readCredential(): Promise<Observable<CredentialState>> {
     const credential = await this.store.ReadCredential()
     return of(credential)

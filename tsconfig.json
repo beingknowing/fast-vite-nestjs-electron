@@ -15,6 +15,7 @@
         "src/main/*"
       ]
     },
+    "outDir": "./dist/"
   },
   "references": [
     {
