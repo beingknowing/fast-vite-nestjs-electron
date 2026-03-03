@@ -2,8 +2,7 @@
   "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
   "include": [
     "**/*.d.ts",
-    "src/render/**/*.vue",
-    "src/render/**/*.ts",
+    "src/render/**/*",
     "**/*.ts",
     "vite.config.mts",
   ],
@@ -19,6 +18,8 @@
     "composite": true,
     "baseUrl": "./",
     "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
   "vueCompilerOptions": {
     "plugins": [
@@ -27,6 +28,7 @@
     ],
   },
   "exclude": [
+    "./src/main/",
     "**/dist",
     "**/build",
     ".vscode",

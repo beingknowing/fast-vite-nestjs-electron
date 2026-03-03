@@ -1,12 +1,11 @@
 import type { IpcRenderer } from 'electron'
-import type electron from './electron'
+import electron from './electron'
+import { type } from '../../types/auto-imports';
 
 declare global {
   interface Window {
-    electron: {
-      [K in keyof typeof electron]: typeof electron[K] extends (...args: infer Args) => IpcRenderer
-        ? (...args: Args) => void
-        : typeof electron[K]
-    }
+    electron: typeof electron
+    ipcRenderer: IpcRenderer
+    type: typeof type
   }
 }

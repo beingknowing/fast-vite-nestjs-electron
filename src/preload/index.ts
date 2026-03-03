@@ -23,4 +23,5 @@ if (process.contextIsolated) {
     window.electron = electron
 
 
+
 }
