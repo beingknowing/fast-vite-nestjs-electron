@@ -8,7 +8,9 @@
     "**/*.mts",
   ],
   "compilerOptions": {
-    "composite": true
+    "composite": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
   "exclude": [
     "./src/render",

@@ -15,8 +15,6 @@
         "src/main/*"
       ]
     },
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
   },
   "references": [
     {

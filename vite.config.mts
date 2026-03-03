@@ -12,6 +12,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 
+import pkg from './package.json'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   root: join(__dirname, 'src/render'),
@@ -90,5 +92,13 @@ export default defineConfig({
   build: {
     outDir: join(__dirname, 'dist/render'),
     emptyOutDir: true,
+    rollupOptions: {
+      // 将 package.json 中的所有依赖排除在打包之外
+      external: [
+        ...Object.keys(pkg.dependencies || {}),
+        'electron',
+        /^node:/, // 排除 node 原生模块
+      ],
+    },
   },
 })

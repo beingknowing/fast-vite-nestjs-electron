@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { RouterView, RouterLink, useRoute } from 'vue-router'
 
-// import type { RouteNamedMap } from 'vue-router'
-
 type NavLink = { label: string; to: string; description: string }
 
 const navLinks: NavLink[] = [

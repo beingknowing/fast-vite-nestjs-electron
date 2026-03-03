@@ -6,7 +6,6 @@
     "src/render/**/*.ts",
     "**/*.ts",
     "vite.config.mts",
-    "./src/route-map.d.ts"
   ],
   "compilerOptions": {
     "module": "ESNext",
