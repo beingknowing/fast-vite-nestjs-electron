@@ -53,41 +53,37 @@ onReplyMsg((msg: string) => {
 </script>
 
 <template>
-  <div class="hello-world">
-    <div class="card">
-      <div class="card-body">
-        <div class="log-section">
-          <label class="label">Message Log</label>
-          <textarea
-            ref="textareaRef" v-model="log" class="log-output" placeholder="Message logs will appear here..."
-            readonly
-          />
-          <div class="log-actions">
-            <p class="card-description">
-              Communicate with the main process
-            </p>
-            <button class="btn btn-secondary btn-sm" :disabled="!log" @click="log = ''">
-              Clear Log
-            </button>
-          </div>
+<div class="hello-world">
+  <div class="card">
+    <div class="card-body">
+      <div class="log-section">
+        <label class="label">Message Log</label>
+        <textarea ref="textareaRef" v-model="log" class="log-output" placeholder="Message logs will appear here..."
+          readonly />
+        <div class="log-actions">
+          <p class="card-description">
+            Communicate with the main process
+          </p>
+          <button class="btn btn-secondary btn-sm" :disabled="!log" @click="log = ''">
+            Clear Log
+          </button>
         </div>
+      </div>
 
-        <div class="input-section">
-          <label class="label">Send Message</label>
-          <div class="input-group">
-            <input
-              v-model="msg" type="text" class="input" placeholder="Enter message to send to main process..."
-              :disabled="isSending" @keypress="handleKeyPress"
-            >
-            <button class="btn btn-primary" :disabled="!msg.trim() || isSending" @click="sendMsg">
-              <span v-if="!isSending">Send</span>
-              <span v-else>Sending...</span>
-            </button>
-          </div>
+      <div class="input-section">
+        <label class="label">Send Message</label>
+        <div class="input-group">
+          <input v-model="msg" type="text" class="input" placeholder="Enter message to send to main process..."
+            :disabled="isSending" @keypress="handleKeyPress">
+          <button class="btn btn-primary" :disabled="!msg.trim() || isSending" @click="sendMsg">
+            <span v-if="!isSending">Send</span>
+            <span v-else>Sending...</span>
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <style scoped>
