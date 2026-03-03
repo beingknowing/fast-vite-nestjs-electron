@@ -1,8 +1,8 @@
 {
   "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
   "include": [
-    "src/preload/**/*", //不能包含preload中的代码
-    "**/*.ts",
+    // "src/preload/**/*", //不能包含preload中的代码
+    // "**/*.ts",
     "./**/*.d.ts",
     "./src/render/**/*",
     "vite.config.mts",
@@ -21,6 +21,7 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "outDir": "./dist/"
   },
   "vueCompilerOptions": {
     "plugins": [
