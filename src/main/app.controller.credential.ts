@@ -17,21 +17,14 @@ export class AppController {
   ) { }
 
   @IpcHandle('saveCredential')
-  public async saveCredential(@Payload() data: CredentialState): Promise<Observable<true>> {
-    return of((await this.store.saveCredential(data)))
+  public async saveCredential(@Payload() data: CredentialState): Promise<true> {
+    return ((await this.store.saveCredential(data)))
   }
 
   @IpcHandle('readCredential')
-  public async readCredential(): Promise<Observable<CredentialState>> {
+  public async readCredential(): Promise<CredentialState> {
     const credential = await this.store.ReadCredential()
-    return of(credential)
-  }
-
-  @IpcHandle('msg')
-  public handleSendMsg(@Payload() msg: string): Observable<string> {
-    const { webContents } = this.mainWin
-    webContents.send('reply-msg', 'this is msg from webContents.send')
-    return of(`The main process received your message: ${msg} at time: ${this.appService.getTime()}`)
+    return (credential)
   }
 
 }
