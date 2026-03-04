@@ -30,7 +30,7 @@ import { AppServiceStore } from './app.service.store'
 
       const URL = isDev
         ? process.env.DS_RENDERER_URL
-        : `file://${join(app.getAppPath(), 'dist/render/index.html')}`
+        : `file://${join(app.getAppPath(), 'dist/render/index.html#/')}`
 
       win.loadURL(URL!)
 
@@ -38,11 +38,12 @@ import { AppServiceStore } from './app.service.store'
     },
   })],
   controllers: [
-    AppController
-    , AppControllerCredential
-    , AppControllerTicket
+    AppController,
+    AppControllerCredential,
+    AppControllerTicket
   ],
-  providers: [AppService,
+  providers: [
+    AppService,
     AppServiceOS,
     AppServiceTicket,
     AppServiceStore
