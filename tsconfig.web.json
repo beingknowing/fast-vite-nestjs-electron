@@ -21,7 +21,19 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "outDir": "./dist/"
+    "outDir": "./dist/",
+    "paths": {
+      "@/*": [
+        "src/render/*",
+        "*"
+      ],
+      "@render/*": [
+        "src/render/*"
+      ],
+      "@main/*": [
+        "src/main/*"
+      ]
+    },
   },
   "vueCompilerOptions": {
     "plugins": [

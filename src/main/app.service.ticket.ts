@@ -5,39 +5,52 @@ import * as qs from 'qs';
 import type { AxiosRequestConfig } from 'axios';
 import { ClientCredential, TicketResponse, TicketType } from '../../types/orm_types';
 import { AppServiceOS } from './app.service.os';
+import { AppServiceStore } from './app.service.store';
 
 @Injectable()
 export class AppServiceTicket {
-    public constructor(private readonly appServiceOS: AppServiceOS) {
+    public constructor(
+        private readonly appServiceOS: AppServiceOS,
+        private readonly store: AppServiceStore
+    ) {
         axios.defaults.timeout = 60000;
+
+    }
+    public async getCurrent() {
+        const current = await this.store.getCurrent() || { key: 'test' }
+        return current;
     }
     public async getToken() {
-        var data = qs.stringify({
-            'grant_type': 'client_credentials',
-            'client_secret': process.env.client_secret,
-            'client_id': process.env.client_id
-        });
-        var config = {
-            method: 'post',
-            url: `${process.env.sn_host}/oauth_token.do`,
-            headers: {
-                'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-                'Accept': '*/*',
-                'Connection': 'keep-alive',
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            data: data
-        } satisfies AxiosRequestConfig;
+        return this.getCurrent()
+            .then(async current => {
+                var data = qs.stringify({
+                    'grant_type': 'client_credentials',
+                    'client_secret': current.client_secret,
+                    'client_id': current.client_id
+                });
+                var config = {
+                    method: 'post',
+                    url: `${current.sn_host}/oauth_token.do`,
+                    headers: {
+                        'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+                        'Accept': '*/*',
+                        'Connection': 'keep-alive',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    data: data
+                } satisfies AxiosRequestConfig;
 
-        return await axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                return response.data as ClientCredential;
+                return await axios(config)
+                    .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                        return response.data as ClientCredential;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        throw new Error(error);
+                    });
             })
-            .catch(function (error) {
-                console.log(error);
-                throw new Error(error);
-            });
+
     }
 
     public async submitTicket(userInput: TicketType) {
@@ -57,27 +70,30 @@ export class AppServiceTicket {
             "u_correlation_display": "",
             "u_use_ci_alert_assignment": 1
         });
+        return this.getCurrent()
+            .then(async current => {
+                var config = {
+                    method: 'post',
+                    url: `${current.sn_host}/api/now/import/u_create_incident_inbound`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${client_credentials.access_token}`,
+                        'Accept': '*/*',
+                        'Connection': 'keep-alive',
+                    },
+                    data: data
+                };
 
-        var config = {
-            method: 'post',
-            url: `${process.env.sn_host}/api/now/import/u_create_incident_inbound`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${client_credentials.access_token}`,
-                'Accept': '*/*',
-                'Connection': 'keep-alive',
-            },
-            data: data
-        };
-
-        return await axios(config)
-            .then(function (response) {
-                return response.data as TicketResponse
+                return await axios(config)
+                    .then(function (response) {
+                        return response.data as TicketResponse
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        throw new Error(error);
+                    });
             })
-            .catch(function (error) {
-                console.log(error);
-                throw new Error(error);
-            });
+
 
     }
 }

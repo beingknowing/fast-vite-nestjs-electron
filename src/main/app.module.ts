@@ -4,6 +4,11 @@ import { Module } from '@nestjs/common'
 import { app, BrowserWindow } from 'electron'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { AppControllerCredential } from './app.controller.credential'
+import { AppControllerTicket } from './app.controller.ticket'
+import { AppServiceTicket } from './app.service.ticket'
+import { AppServiceOS } from './app.service.os'
+import { AppServiceStore } from './app.service.store'
 
 @Module({
   imports: [ElectronModule.registerAsync({
@@ -32,7 +37,15 @@ import { AppService } from './app.service'
       return { win }
     },
   })],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [
+    AppController
+    , AppControllerCredential
+    , AppControllerTicket
+  ],
+  providers: [AppService,
+    AppServiceOS,
+    AppServiceTicket,
+    AppServiceStore
+  ],
 })
 export class AppModule { }

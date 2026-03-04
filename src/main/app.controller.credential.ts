@@ -5,9 +5,10 @@ import { Payload } from '@nestjs/microservices'
 import { AppService } from './app.service'
 import { AppServiceStore } from './app.service.store'
 import type { CredentialState } from '../../types/orm_types'
+import { assign } from 'radash'
 
 @Controller()
-export class AppController {
+export class AppControllerCredential {
   constructor(
     _appService: AppService,
     @Window() _mainWin: BrowserWindow,
@@ -21,8 +22,37 @@ export class AppController {
 
   @IpcHandle('readCredential')
   public async readCredential(): Promise<CredentialState> {
-    const credential = await this.store.ReadCredential()
-    return (credential)
+    const credential = await this.store.readCredential()
+    const newCredential = assign({
+      tableData: [
+        {
+          key: 'prod',
+          client_secret: '',
+          client_id: '',
+          sn_host: '',
+          isCurrent: true,
+          editing: false,
+        },
+        {
+          key: 'test',
+          client_secret: '',
+          client_id: '',
+          sn_host: '',
+          isCurrent: true,
+          editing: false,
+        },
+        {
+          key: 'stage',
+          client_secret: '',
+          client_id: '',
+          sn_host: '',
+          isCurrent: false,
+          editing: false,
+        }
+      ]
+    }, credential)
+    return (newCredential)
   }
+
 
 }

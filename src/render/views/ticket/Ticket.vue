@@ -20,6 +20,7 @@ const options: Option[] = [
 const ticketStore = useTicketStore()
 const { ticket, validationMessages, isFormValid, result, isSubmitting } = storeToRefs(ticketStore)
 
+const current = await ticketStore.getCurrent()
 const querySearch = (query: string, cb: (results: Option[]) => void) =>
     cb(
         options.filter(
@@ -37,16 +38,15 @@ const link = computed(() =>
     result.value
         ? {
             txt: result.value.result[0].display_value,
-            href: `${window.env.sn_host}/now/sow/record/incident/${result.value.result[0].sys_id}`,
+            href: `${current.sn_host}/now/sow/record/incident/${result.value.result[0].sys_id}`,
         }
         : {
             txt: 'waiting...',
-            href: `${window.env.sn_host}/now/sow/home`,
+            href: `${current.sn_host}/now/sow/home`,
         },
 )
-
 const information = reactive({
-    host: window.env.sn_host,
+    host: current.sn_host
 })
 
 const enableSubmitBtn = computed(() => isFormValid.value && !isSubmitting.value)

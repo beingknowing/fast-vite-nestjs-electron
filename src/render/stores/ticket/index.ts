@@ -86,6 +86,15 @@ export const useTicketStore = defineStore('ticket', () => {
         return undefined
     }
 
+    const getCurrent = async () => {
+        const all = await window.electron.readCredential()
+        let v = all.tableData.find(i => i.isCurrent) ?? all.tableData.find(i => i.key == 'test')
+
+
+        return v!
+
+    }
+
     return {
         ticket,
         validationMessages,
@@ -97,5 +106,6 @@ export const useTicketStore = defineStore('ticket', () => {
         validateTicket,
         setResult,
         submitTicket,
+        getCurrent
     }
 })

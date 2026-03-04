@@ -11,8 +11,14 @@ export class AppServiceStore {
         store.set(this.storeKey, data)
         return true
     }
-    public async ReadCredential(): Promise<CredentialState> {
+    public async readCredential(): Promise<CredentialState> {
         const credential = store.get(this.storeKey) as CredentialState || {}
         return credential
+    }
+
+    public async getCurrent() {
+        const all = await this.readCredential()
+        let v = all.tableData.find(i => i.isCurrent) ?? all.tableData.find(i => i.key == 'test')
+        return v
     }
 }

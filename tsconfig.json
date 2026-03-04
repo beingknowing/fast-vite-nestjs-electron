@@ -7,17 +7,6 @@
     "forceConsistentCasingInFileNames": true,
     // "skipLibCheck": true,
     "baseUrl": "./",
-    "paths": {
-      "@/*": [
-        "src/render/*"
-      ],
-      "@render/*": [
-        "src/render/*"
-      ],
-      "@main/*": [
-        "src/main/*"
-      ]
-    },
     "outDir": "./dist/",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
