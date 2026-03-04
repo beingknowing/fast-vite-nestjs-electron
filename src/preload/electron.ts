@@ -1,9 +1,11 @@
 import { ipcRenderer } from 'electron'
+import { ipcInvoke } from './electron.ipc-auto'
 
 export default {
   ipcRenderer,
-  sendMsg: (msg: string): Promise<string> => ipcRenderer.invoke('msg', msg),
-  onReplyMsg: (cb: (msg: string) => any) => ipcRenderer.on('reply-msg', (e, msg: string) => {
-    cb(msg)
+  ...ipcInvoke,
+  sendMsg: ipcInvoke.msg,
+  onReplyMsg: (cb: (msg: string) => any) => ipcRenderer.on('reply-msg', (...args: [unknown, string]) => {
+    cb(args[1])
   }),
 }

@@ -83,6 +83,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      '@': join(__dirname, 'src/render'),
       '@render': join(__dirname, 'src/render'),
       '@main': join(__dirname, 'src/main'),
     },

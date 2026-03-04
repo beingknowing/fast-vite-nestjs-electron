@@ -53,34 +53,6 @@ function hasDecorator(param, targetDecoratorName) {
     return decorators.some((d) => getDecoratorName(d) === targetDecoratorName)
 }
 
-function unwrapAsyncOrObservable(type, checker) {
-    let current = type
-
-    for (let depth = 0; depth < 8; depth++) {
-        const symbol = current.aliasSymbol ?? current.getSymbol()
-        const symbolName = symbol?.getName()
-
-        if (!symbolName) break
-
-        if ((symbolName === 'Promise' || symbolName === 'Observable') && current.aliasTypeArguments?.[0]) {
-            current = current.aliasTypeArguments[0]
-            continue
-        }
-
-        if ((symbolName === 'Promise' || symbolName === 'Observable') && checker.isArrayType(current) === false) {
-            const ref = current
-            if ('typeArguments' in ref && Array.isArray(ref.typeArguments) && ref.typeArguments[0]) {
-                current = ref.typeArguments[0]
-                continue
-            }
-        }
-
-        break
-    }
-
-    return current
-}
-
 const configResult = ts.readConfigFile(tsconfigPath, ts.sys.readFile)
 if (configResult.error) {
     throw new Error(ts.flattenDiagnosticMessageText(configResult.error.messageText, '\n'))
@@ -157,7 +129,7 @@ for (const sourceFile of program.getSourceFiles()) {
                     return `${nameText}: ${typeText}`
                 })
 
-                const returnType = unwrapAsyncOrObservable(signature.getReturnType(), checker)
+                const returnType = signature.getReturnType()
                 const returnTypeText = checker.typeToString(
                     returnType,
                     undefined,
@@ -201,7 +173,9 @@ lines.push('')
 lines.push('export type IpcChannel = keyof IpcInvokeMap')
 lines.push('')
 lines.push('export type IpcInvokeArgs<T extends IpcChannel> = IpcInvokeMap[T][\'params\']')
-lines.push('export type IpcInvokeReturn<T extends IpcChannel> = Promise<IpcInvokeMap[T][\'return\']>')
+lines.push('export type IpcInvokeReturn<T extends IpcChannel> = IpcInvokeMap[T][\'return\'] extends Promise<unknown>')
+lines.push('  ? IpcInvokeMap[T][\'return\']')
+lines.push('  : Promise<IpcInvokeMap[T][\'return\']>')
 lines.push('')
 lines.push('export {}')
 lines.push('')

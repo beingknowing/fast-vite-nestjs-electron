@@ -1,9 +1,7 @@
 import type { BrowserWindow } from 'electron'
-import type { Observable } from 'rxjs'
 import { IpcHandle, Window } from '@doubleshot/nest-electron'
 import { Controller } from '@nestjs/common'
 import { Payload } from '@nestjs/microservices'
-import { of } from 'rxjs'
 import { AppService } from './app.service'
 import { AppServiceStore } from './app.service.store'
 import type { CredentialState } from '../../types/orm_types'
@@ -11,8 +9,8 @@ import type { CredentialState } from '../../types/orm_types'
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService,
-    @Window() private readonly mainWin: BrowserWindow,
+    _appService: AppService,
+    @Window() _mainWin: BrowserWindow,
     private readonly store: AppServiceStore
   ) { }
 

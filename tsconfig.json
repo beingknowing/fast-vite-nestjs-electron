@@ -8,6 +8,9 @@
     // "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
+      "@/*": [
+        "src/render/*"
+      ],
       "@render/*": [
         "src/render/*"
       ],

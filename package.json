@@ -7,9 +7,11 @@
   "main": "dist/main/index.js",
   "scripts": {
     "gen:ipc-types": "node scripts/generate-ipc-types.mjs",
-    "dev": "rimraf dist && pnpm gen:ipc-types && vite",
-    "debug": "rimraf dist && pnpm gen:ipc-types && vite -- --dsb-debug",
-    "build": "rimraf dist && pnpm gen:ipc-types && vite build",
+    "gen:preload-api": "node scripts/generate-preload-api.mjs",
+    "gen:ipc": "pnpm gen:ipc-types && pnpm gen:preload-api",
+    "dev": "rimraf dist && pnpm gen:ipc && vite",
+    "debug": "rimraf dist && pnpm gen:ipc && vite -- --dsb-debug",
+    "build": "rimraf dist && pnpm gen:ipc && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "npx simple-git-hooks && electron-builder install-app-deps"

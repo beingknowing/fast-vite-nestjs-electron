@@ -6,29 +6,31 @@ import type { CredentialState, TicketResponse, TicketType } from './orm_types'
 export interface IpcInvokeMap {
   'get-domain-user': {
     params: []
-    return: string
+    return: Promise<string>
   }
   'msg': {
     params: [msg: string]
-    return: string
+    return: Observable<string>
   }
   'readCredential': {
     params: []
-    return: CredentialState
+    return: Promise<CredentialState>
   }
   'saveCredential': {
     params: [data: CredentialState]
-    return: true
+    return: Promise<true>
   }
   'ticket': {
     params: [data: TicketType]
-    return: TicketResponse
+    return: Promise<TicketResponse>
   }
 }
 
 export type IpcChannel = keyof IpcInvokeMap
 
 export type IpcInvokeArgs<T extends IpcChannel> = IpcInvokeMap[T]['params']
-export type IpcInvokeReturn<T extends IpcChannel> = Promise<IpcInvokeMap[T]['return']>
+export type IpcInvokeReturn<T extends IpcChannel> = IpcInvokeMap[T]['return'] extends Promise<unknown>
+  ? IpcInvokeMap[T]['return']
+  : Promise<IpcInvokeMap[T]['return']>
 
 export {}
