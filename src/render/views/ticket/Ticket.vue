@@ -6,6 +6,7 @@ import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@/stores/ticket'
 import { ipcChannels, typedInvoke } from '../../ipc'
+import { CredentialItem } from '@/types/orm_types'
 
 type Option = { des: string; queue: string }
 
@@ -20,7 +21,16 @@ const options: Option[] = [
 const ticketStore = useTicketStore()
 const { ticket, validationMessages, isFormValid, result, isSubmitting } = storeToRefs(ticketStore)
 
-const current = await ticketStore.getCurrent()
+const current = ref<CredentialItem>({
+    key: 'test',
+})
+
+onMounted(async () => {
+    current.value = await ticketStore.getCurrent()
+    const userName = await typedInvoke(ipcChannels.getDomainUser)
+    ticketStore.setTicketField('userName', userName)
+})
+
 const querySearch = (query: string, cb: (results: Option[]) => void) =>
     cb(
         options.filter(
@@ -38,16 +48,13 @@ const link = computed(() =>
     result.value
         ? {
             txt: result.value.result[0].display_value,
-            href: `${current.sn_host}/now/sow/record/incident/${result.value.result[0].sys_id}`,
+            href: `${current.value.sn_host}/now/sow/record/incident/${result.value.result[0].sys_id}`,
         }
         : {
             txt: 'waiting...',
-            href: `${current.sn_host}/now/sow/home`,
+            href: `${current.value.sn_host}/now/sow/home`,
         },
 )
-const information = reactive({
-    host: current.sn_host
-})
 
 const enableSubmitBtn = computed(() => isFormValid.value && !isSubmitting.value)
 
@@ -60,7 +67,7 @@ async function submitTicket() {
 
 </script>
 <template><el-card class="form-card" style="margin-top: 16px;width: 100%;height: 100%;">
-    <el-text class="mx-1" type="primary">{{ information.host }}</el-text>
+    <el-text class="mx-1" type="primary">{{ current.sn_host }}</el-text>
     <!-- user name -->
     <el-input v-model="ticket.userName" :placeholder="`请输入${fieldLabels.userName}`" clearable show-word-limit
         maxlength="100" readonly />
