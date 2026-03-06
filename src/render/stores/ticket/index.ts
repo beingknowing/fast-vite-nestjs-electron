@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { TicketResponse, TicketType } from '../../../../types/orm_types'
 import { computed, reactive, ref, toRaw } from 'vue'
-import { ipcChannels, typedInvoke } from '../../ipc'
+ 
 
 export const fieldLabels = {
     userName: '工单提交人',
@@ -73,7 +73,7 @@ export const useTicketStore = defineStore('ticket', () => {
             isSubmitting.value = true
             setResult()
             const payload = toRaw(ticket)
-            const res = await typedInvoke(ipcChannels.ticket, payload)
+            const res = await window.electron.ticket(payload)  //typedInvoke(ipcChannels.ticket, payload)
             setResult(res)
             console.log('Submitting ticket:', payload, 'Queue:', payload.queue_val)
         } catch (error) {

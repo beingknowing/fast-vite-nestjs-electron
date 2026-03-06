@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { CredentialState, CredentialItem } from '../../../../types/orm_types'
-import { toRaw } from 'vue'
-import { ipcChannels, typedInvoke } from '../../ipc'
+ 
 
 export const useCredentialStore = defineStore('credential', {
     state(): CredentialState {
@@ -61,7 +60,8 @@ export const useCredentialStore = defineStore('credential', {
                 row.editing = false
 
             }
-            typedInvoke(ipcChannels.saveCredential, { tableData: toRaw(this.tableData) })
+            // typedInvoke(ipcChannels.saveCredential, { tableData: toRaw(this.tableData) })
+            window.electron.saveCredential(toRaw(this.$state))
         }
     },
 

@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@/stores/ticket'
-import { ipcChannels, typedInvoke } from '../../ipc'
+import { assign } from 'radash'
 import { CredentialItem } from '@/types/orm_types'
 
 type Option = { des: string; queue: string }
@@ -21,14 +21,19 @@ const options: Option[] = [
 const ticketStore = useTicketStore()
 const { ticket, validationMessages, isFormValid, result, isSubmitting } = storeToRefs(ticketStore)
 
-const current = ref<CredentialItem>({
+const current = reactive<CredentialItem>({
     key: 'test',
 })
 
-onMounted(async () => {
-    current.value = await ticketStore.getCurrent()
-    const userName = await typedInvoke(ipcChannels.getDomainUser)
-    ticketStore.setTicketField('userName', userName)
+onMounted(() => {
+    ticketStore.getCurrent().then(curr => {
+        Object.assign(current, curr)
+
+        console.log("🚀 ~ current:", current)
+        console.log("🚀 ~ curr:", curr)
+    })
+    window.electron.getDomainUser()
+        .then(userName => ticketStore.setTicketField('userName', userName))
 })
 
 const querySearch = (query: string, cb: (results: Option[]) => void) =>
@@ -39,20 +44,21 @@ const querySearch = (query: string, cb: (results: Option[]) => void) =>
                 item.queue.toLowerCase().includes(query.toLowerCase()),
         ),
     )
+// window.electron.getDomainUser().then(userName => ticketStore.setTicketField('userName', userName))
+// typedInvoke(ipcChannels.getDomainUser).then((userName) => {
+//     ticketStore.setTicketField('userName', userName)
+// })
 
-typedInvoke(ipcChannels.getDomainUser).then((userName) => {
-    ticketStore.setTicketField('userName', userName)
-})
 
 const link = computed(() =>
     result.value
         ? {
-            txt: result.value.result[0].display_value,
-            href: `${current.value.sn_host}/now/sow/record/incident/${result.value.result[0].sys_id}`,
+            txt: result.value?.result[0].display_value,
+            href: `${current.sn_host}/now/sow/record/incident/${result.value.result[0].sys_id}`,
         }
         : {
             txt: 'waiting...',
-            href: `${current.value.sn_host}/now/sow/home`,
+            href: `${current.sn_host}/now/sow/home`,
         },
 )
 
@@ -67,38 +73,38 @@ async function submitTicket() {
 
 </script>
 <template><el-card class="form-card" style="margin-top: 16px;width: 100%;height: 100%;">
-    <el-text class="mx-1" type="primary">{{ current.sn_host }}</el-text>
-    <!-- user name -->
-    <el-input v-model="ticket.userName" :placeholder="`请输入${fieldLabels.userName}`" clearable show-word-limit
-        maxlength="100" readonly />
-    <p class="field-error" v-if="validationMessages.userName">{{ validationMessages.userName }}</p>
+        <el-text class="mx-1" type="primary">Env:{{ current.key }}, Host:{{ current.sn_host }}</el-text>
+        <!-- user name -->
+        <el-input v-model="ticket.userName" :placeholder="`请输入${fieldLabels.userName}`" clearable show-word-limit
+            maxlength="100" readonly />
+        <p class="field-error" v-if="validationMessages.userName">{{ validationMessages.userName }}</p>
 
-    <!-- title -->
-    <el-input v-model="ticket.title" :placeholder="`请输入${fieldLabels.title}`" clearable show-word-limit
-        maxlength="100" />
-    <p class="field-error" v-if="validationMessages.title">{{ validationMessages.title }}</p>
+        <!-- title -->
+        <el-input v-model="ticket.title" :placeholder="`请输入${fieldLabels.title}`" clearable show-word-limit
+            maxlength="100" />
+        <p class="field-error" v-if="validationMessages.title">{{ validationMessages.title }}</p>
 
-    <!-- content -->
-    <el-input v-model="ticket.content" type="textarea" :rows="4" :placeholder="`请输入${fieldLabels.content}（支持换行）`"
-        clearable show-word-limit maxlength="1000" />
-    <p class="field-error" v-if="validationMessages.content">{{ validationMessages.content }}</p>
+        <!-- content -->
+        <el-input v-model="ticket.content" type="textarea" :rows="4" :placeholder="`请输入${fieldLabels.content}（支持换行）`"
+            clearable show-word-limit maxlength="1000" />
+        <p class="field-error" v-if="validationMessages.content">{{ validationMessages.content }}</p>
 
-    <!-- queue -->
-    <el-autocomplete v-model="ticket.queue_val" :fetch-suggestions="querySearch"
-        :placeholder="`请输入以筛选${fieldLabels.queue_val}`" value-key="queue" clearable>
-        <template #default="scope">
-            <div v-if="scope?.item" class="auto-item">{{ scope.item.des }}（{{ scope.item.queue }}）</div>
-        </template>
-    </el-autocomplete>
-    <p class="field-error" v-if="validationMessages.queue_val">{{ validationMessages.queue_val }}</p>
+        <!-- queue -->
+        <el-autocomplete v-model="ticket.queue_val" :fetch-suggestions="querySearch"
+            :placeholder="`请输入以筛选${fieldLabels.queue_val}`" value-key="queue" clearable>
+            <template #default="scope">
+                <div v-if="scope?.item" class="auto-item">{{ scope.item.des }}（{{ scope.item.queue }}）</div>
+            </template>
+        </el-autocomplete>
+        <p class="field-error" v-if="validationMessages.queue_val">{{ validationMessages.queue_val }}</p>
 
-    <el-button type="primary" :disabled="!enableSubmitBtn" @click="submitTicket">提交工单</el-button>
-</el-card>
-<el-card class="link-card" style="margin-top: 16px;width: 100%;height: 100%;">
-    <div style="margin-bottom: 8px; font-weight: 600;"></div>
+        <el-button type="primary" :disabled="!enableSubmitBtn" @click="submitTicket">提交工单</el-button>
+    </el-card>
+    <el-card class="link-card" style="margin-top: 16px;width: 100%;height: 100%;">
+        <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
-    <el-link :href="link.href" target="_blank">{{ link.txt }}</el-link>
-</el-card></template>
+        <el-link :href="link.href" target="_blank">{{ link.txt }}</el-link>
+    </el-card></template>
 
 <style scoped>
 /* Styles all router links in your application */

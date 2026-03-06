@@ -90,6 +90,7 @@ export default defineConfig({
   },
   base: './',
   build: {
+    sourcemap: true,
     outDir: join(__dirname, 'dist/render'),
     emptyOutDir: true,
     rollupOptions: {
