@@ -10,6 +10,8 @@ type PreloadInvokeReturn<T extends IpcChannel, TAsync extends boolean> =
 export const ipcInvoke = {
   getDomainUser: (...args: IpcInvokeArgs<'get-domain-user'>): PreloadInvokeReturn<'get-domain-user', true> =>
     ipcRenderer.invoke('get-domain-user', ...args) as unknown as PreloadInvokeReturn<'get-domain-user', true>,
+  getCurrent: (...args: IpcInvokeArgs<'getCurrent'>): PreloadInvokeReturn<'getCurrent', true> =>
+    ipcRenderer.invoke('getCurrent', ...args) as unknown as PreloadInvokeReturn<'getCurrent', true>,
   msg: (...args: IpcInvokeArgs<'msg'>): PreloadInvokeReturn<'msg', false> =>
     ipcRenderer.invoke('msg', ...args) as unknown as PreloadInvokeReturn<'msg', false>,
   readCredential: (...args: IpcInvokeArgs<'readCredential'>): PreloadInvokeReturn<'readCredential', true> =>

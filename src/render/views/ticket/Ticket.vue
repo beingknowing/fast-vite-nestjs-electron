@@ -5,7 +5,6 @@ import { ElMessage } from 'element-plus'
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@/stores/ticket'
-import { assign } from 'radash'
 import { CredentialItem } from '@/types/orm_types'
 
 type Option = { des: string; queue: string }
@@ -19,14 +18,15 @@ const options: Option[] = [
     { des: 'VPN相关问题', queue: 'GBL-NETWORK VPN' },
 ]
 const ticketStore = useTicketStore()
-const { ticket, validationMessages, isFormValid, result, isSubmitting } = storeToRefs(ticketStore)
-
+const { ticket, validationMessages, isFormValid, result } = storeToRefs(ticketStore)
+const isSubmitting = ref(false);
+console.log("🚀 ~ isSubmitting:", isSubmitting);
 const current = reactive<CredentialItem>({
     sn_host: 'test',
 })
 
 onMounted(() => {
-    ticketStore.getCurrent().then(curr => {
+    window.electron.getCurrent().then(curr => {
         Object.assign(current, curr)
 
         console.log("🚀 ~ current:", current)
@@ -62,7 +62,12 @@ const link = computed(() =>
         },
 )
 
-const enableSubmitBtn = computed(() => isFormValid.value && !isSubmitting.value)
+const enableSubmitBtn = computed(() => {
+    console.log("🚀 ~ isFormValid.value:", isFormValid.value)
+    console.log("🚀 ~ !isSubmitting.value:", !isSubmitting.value)
+    return isFormValid.value && !isSubmitting.value
+
+})
 
 async function submitTicket() {
     const errorMessage = await ticketStore.submitTicket()

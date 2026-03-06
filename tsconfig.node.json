@@ -8,9 +8,22 @@
     "**/*.mts",
   ],
   "compilerOptions": {
+    "baseUrl": "./",
     "composite": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "paths": {
+      "@/*": [
+        "src/render/*",
+        "./*"
+      ],
+      "@render/*": [
+        "src/render/*"
+      ],
+      "@main/*": [
+        "src/main/*"
+      ]
+    },
   },
   "exclude": [
     "./src/render",
