@@ -6,7 +6,7 @@ import { reactive, ref } from 'vue'
 export const useCredentialStore = defineStore('credential', () => {
     const tableData = reactive<CredentialItem[]>([
         {
-            key: 'prod',
+
             client_secret: '',
             client_id: '',
             sn_host: '',
@@ -14,7 +14,7 @@ export const useCredentialStore = defineStore('credential', () => {
             editing: false,
         },
         {
-            key: 'test',
+
             client_secret: '',
             client_id: '',
             sn_host: '',
@@ -22,7 +22,7 @@ export const useCredentialStore = defineStore('credential', () => {
             editing: false,
         },
         {
-            key: 'stage',
+            sn_host: 'stage',
             client_secret: '',
             client_id: '',
             sn_host: '',
@@ -32,13 +32,13 @@ export const useCredentialStore = defineStore('credential', () => {
     ])
 
     const currentKey = ref<string>(
-        tableData.find((r) => r.isCurrent)?.key ?? tableData[0]?.key ?? ''
+        tableData.find((r) => r.isCurrent)?.sn_host ?? tableData[0]?.sn_host ?? ''
     )
 
-    const setCurrent = (key: string) => {
-        currentKey.value = key
+    const setCurrent = (sn_host: string) => {
+        currentKey.value = sn_host
         tableData.forEach((r) => {
-            r.isCurrent = r.key === key
+            r.isCurrent = r.sn_host === sn_host
         })
     }
 

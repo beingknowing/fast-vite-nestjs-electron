@@ -65,11 +65,15 @@ export default defineConfig({
 
     vue(),
     VitePluginDoubleshot({
+      waitTimeout: 50_000, // 等待主进程启动的超时时间，单位为毫秒
       type: 'electron',
       main: 'dist/main/index.js',
       entry: 'src/main/index.ts',
       outDir: 'dist/main',
-      external: ['electron'],
+      external: [...Object.keys(pkg.dependencies || {}),
+        'electron',
+        /^node:/, // 排除 node 原生模块
+      ],
       electron: {
         build: {
           config: './electron-builder.config.js',

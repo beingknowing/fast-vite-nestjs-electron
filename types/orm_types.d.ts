@@ -29,7 +29,6 @@ export interface TicketResult {
     "sys_id": string;// "15aff0c01bbaf21076c00dc5604bcb9e"
 }
 export interface CredentialItem {
-    key: 'prod' | 'test' | 'stage';
     isCurrent?: boolean;
     client_secret?: string;
     client_id?: string;
@@ -39,5 +38,5 @@ export interface CredentialItem {
 
 export interface CredentialState {
     tableData: CredentialItem[];
-    // currentKey: CredentialItem['key'] | undefined;
+    // currentKey: CredentialItem['sn_host'] | undefined;
 }

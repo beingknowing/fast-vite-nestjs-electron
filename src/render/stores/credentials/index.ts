@@ -7,45 +7,21 @@ export const useCredentialStore = defineStore('credential', {
 
         return {
             tableData: [
-                {
-                    key: 'prod',
-                    client_secret: '',
-                    client_id: '',
-                    sn_host: '',
-                    isCurrent: true,
-                    editing: false,
-                },
-                {
-                    key: 'test',
-                    client_secret: '',
-                    client_id: '',
-                    sn_host: '',
-                    isCurrent: false,
-                    editing: false,
-                },
-                {
-                    key: 'stage',
-                    client_secret: '',
-                    client_id: '',
-                    sn_host: '',
-                    isCurrent: false,
-                    editing: false,
-                }
             ]
         }
     },
 
 
     getters: {
-        currentKey(): CredentialItem['key'] | undefined {
-            return this.tableData.find((r) => r.isCurrent)?.key ?? this.tableData[0]?.key ?? undefined
+        currentKey(): CredentialItem['sn_host'] | undefined {
+            return this.tableData.find((r) => r.isCurrent)?.sn_host ?? this.tableData[0]?.sn_host ?? undefined
         }
     },
 
     actions: {
-        setCurrent(key: CredentialItem['key']) {
+        setCurrent(sn_host: CredentialItem['sn_host']) {
             this.tableData.forEach((r) => {
-                r.isCurrent = r.key === key
+                r.isCurrent = r.sn_host === sn_host
             })
         },
 

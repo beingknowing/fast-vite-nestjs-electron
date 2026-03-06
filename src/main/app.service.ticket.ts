@@ -17,7 +17,7 @@ export class AppServiceTicket {
 
     }
     public async getCurrent() {
-        const current = await this.store.getCurrent() || { key: 'test' }
+        const current = await this.store.getCurrent() || { sn_host: 'test' }
         return current;
     }
     public async getToken() {

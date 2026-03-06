@@ -23,35 +23,8 @@ export class AppControllerCredential {
   @IpcHandle('readCredential')
   public async readCredential(): Promise<CredentialState> {
     const credential = await this.store.readCredential()
-    const newCredential = assign({
-      tableData: [
-        {
-          key: 'prod',
-          client_secret: '',
-          client_id: '',
-          sn_host: '',
-          isCurrent: true,
-          editing: false,
-        },
-        {
-          key: 'test',
-          client_secret: '',
-          client_id: '',
-          sn_host: '',
-          isCurrent: true,
-          editing: false,
-        },
-        {
-          key: 'stage',
-          client_secret: '',
-          client_id: '',
-          sn_host: '',
-          isCurrent: false,
-          editing: false,
-        }
-      ]
-    }, credential)
-    return (newCredential)
+
+    return (credential)
   }
 
 

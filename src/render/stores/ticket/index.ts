@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { TicketResponse, TicketType } from '../../../../types/orm_types'
 import { computed, reactive, ref, toRaw } from 'vue'
- 
+
 
 export const fieldLabels = {
     userName: '工单提交人',
@@ -88,7 +88,7 @@ export const useTicketStore = defineStore('ticket', () => {
 
     const getCurrent = async () => {
         const all = await window.electron.readCredential()
-        let v = all.tableData.find(i => i.isCurrent) ?? all.tableData.find(i => i.key == 'test')
+        let v = all.tableData.find(i => i.isCurrent) ?? all.tableData.find(i => i.sn_host == 'test')
 
 
         return v!
