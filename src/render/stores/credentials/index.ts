@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import { CredentialState, CredentialItem } from '../../../../types/orm_types'
- 
+
 
 export const useCredentialStore = defineStore('credential', {
     state(): CredentialState {
+
         return {
             tableData: [
                 {
@@ -34,6 +35,7 @@ export const useCredentialStore = defineStore('credential', {
         }
     },
 
+
     getters: {
         currentKey(): CredentialItem['key'] | undefined {
             return this.tableData.find((r) => r.isCurrent)?.key ?? this.tableData[0]?.key ?? undefined
@@ -62,6 +64,9 @@ export const useCredentialStore = defineStore('credential', {
             }
             // typedInvoke(ipcChannels.saveCredential, { tableData: toRaw(this.tableData) })
             window.electron.saveCredential(toRaw(this.$state))
+        },
+        setTableData(state: CredentialState) {
+            this.tableData = state.tableData
         }
     },
 

@@ -44,4 +44,9 @@ import { useCredentialStore } from '@/stores/credentials'
 const store = useCredentialStore()
 const { tableData, currentKey } = storeToRefs(store)
 const { handleEdit, handleSave, setCurrent } = store
+
+onMounted(async () => {
+  const cred = await window.electron.readCredential()
+  store.setTableData(cred)
+})
 </script>
