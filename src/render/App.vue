@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { RouterView, RouterLink, useRoute } from 'vue-router'
 
-// import type { RouteNamedMap } from 'vue-router'
+import type { RouteNamedMap } from 'vue-router/auto-routes'
 
-type NavLink = { label: string; to: string; description: string }
+type NavLink = { label: string; to: keyof RouteNamedMap; description: string }
 
 const navLinks: NavLink[] = [
   { label: '工单中心', to: '/ticket/ticket', description: '创建并提交新的 ServiceNow 工单' },
   { label: '凭据管理', to: '/settings/credentials', description: '维护 Client ID、Secret 与主机地址' },
-  { label: '路由示例 · 一', to: '/routeTest/viewOne', description: '演示自动路由 ViewOne 页面' },
-  { label: '路由示例 · 二', to: '/routeTest/viewTwo', description: '演示自动路由 ViewTwo 页面' },
+  { label: '路由示例 · 一', to: '/routetest/viewone', description: '演示自动路由 ViewOne 页面' },
+  { label: '路由示例 · 二', to: '/routetest/viewtwo', description: '演示自动路由 ViewTwo 页面' },
 ]
 
 const route = useRoute()
@@ -33,12 +33,6 @@ const route = useRoute()
   </aside>
 
   <section class="display-panel">
-    <!-- <header class="display-header">
-        <div>
-          <p class="eyebrow">Workspace</p> 
-        </div>
-      </header> -->
-
     <div class="display-body">
       <RouterView v-slot="{ Component }">
         <component v-if="Component" :is="Component" class="display-component" />

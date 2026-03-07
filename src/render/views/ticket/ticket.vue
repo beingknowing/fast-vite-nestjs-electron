@@ -77,7 +77,7 @@ async function submitTicket() {
 }
 
 </script>
-<template><el-card class="form-card" style="margin-top: 16px;width: 100%;height: 100%;">
+<template><el-card class="form-card">
     <el-text class="mx-1" type="primary"> Host:{{ current.sn_host }}</el-text>
     <!-- user name -->
     <el-input v-model="ticket.userName" :placeholder="`请输入${fieldLabels.userName}`" clearable show-word-limit
@@ -104,8 +104,7 @@ async function submitTicket() {
     <p class="field-error" v-if="validationMessages.queue_val">{{ validationMessages.queue_val }}</p>
 
     <el-button type="primary" :disabled="!enableSubmitBtn" @click="submitTicket">提交工单</el-button>
-</el-card>
-<el-card class="link-card" style="margin-top: 16px;width: 100%;height: 100%;">
+
     <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
     <el-link :href="link.href" target="_blank">{{ link.txt }}</el-link>
