@@ -54,16 +54,16 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/settings/Credentials': RouteRecordInfo<
-      '/settings/Credentials',
-      '/settings/Credentials',
+    '/settings/Credentials1': RouteRecordInfo<
+      '/settings/Credentials1',
+      '/settings/Credentials1',
       Record<never, never>,
       Record<never, never>,
       | never
     >,
-    '/ticket/Ticket': RouteRecordInfo<
-      '/ticket/Ticket',
-      '/ticket/Ticket',
+    '/ticket/Ticket1': RouteRecordInfo<
+      '/ticket/Ticket1',
+      '/ticket/Ticket1',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -105,15 +105,15 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/render/views/settings/Credentials.vue': {
+    'src/render/views/settings/Credentials1.vue': {
       routes:
-        | '/settings/Credentials'
+        | '/settings/Credentials1'
       views:
         | never
     }
-    'src/render/views/ticket/Ticket.vue': {
+    'src/render/views/ticket/Ticket1.vue': {
       routes:
-        | '/ticket/Ticket'
+        | '/ticket/Ticket1'
       views:
         | never
     }

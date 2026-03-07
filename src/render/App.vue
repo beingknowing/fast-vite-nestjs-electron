@@ -53,8 +53,6 @@ const route = useRoute()
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap');
-
 :global(html, body, #app) {
   margin: 0;
   min-height: 100%;
@@ -66,7 +64,7 @@ const route = useRoute()
 .app-shell {
   display: grid;
   grid-template-columns: 280px 1fr;
-  min-height: 100vh;
+
 }
 
 .nav-panel {
