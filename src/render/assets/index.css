@@ -20,3 +20,47 @@ body {
   border-left: 2px solid #007acc;
   /* 类似 VS Code 的左侧蓝色条 */
 }
+/* responsive base */
+html, body, #app { height: 100%; margin: 0; }
+.app-shell { display: grid; grid-template-columns: 280px 1fr; height:100%; }
+.display-panel { display: flex; flex-direction: column; height:100%; }
+.display-body { flex:1; min-height:0; }
+.main-window-layout { display:flex; height:100%; }
+.main-window-layout aside { width:200px; }
+.main-window-layout main { flex:1; display:flex; flex-direction:column; }
+.main-window-layout main> * { flex:1; }
+
+/* nav styles copied */
+.nav-panel{background:linear-gradient(180deg,#0f172a 0%,#111827 70%);
+  padding:32px 24px;display:flex;flex-direction:column;gap:32px;
+  border-right:1px solid rgba(255,255,255,.08);}
+.nav-brand h1{margin:8px 0 4px;font-size:24px;color:#fff;}
+.nav-subtitle{margin:0;color:#94a3b8;font-size:13px;}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:#94a3b8;}
+.nav-links{display:flex;flex-direction:column;gap:14px;}
+.nav-link{border-radius:16px;padding:16px;text-decoration:none;color:#d9e3ff;
+  background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.2);
+  display:flex;flex-direction:column;gap:6px;transition:all .2s ease;}
+.nav-link__label{font-weight:600;font-size:15px;}
+.nav-link__desc{font-size:12px;color:#94a3b8;}
+.nav-link:hover{transform:translateX(4px);border-color:rgba(56,189,248,.7);}
+.nav-link.is-active{background:rgba(56,189,248,.15);border-color:#38bdf8;
+  box-shadow:0 15px 40px rgba(8,47,73,.45);}
+.display-panel{background:#f5f7fb;padding:40px;display:flex;
+  flex-direction:column;gap:24px;}
+.display-body{background:#fff;border-radius:32px;padding:32px;
+  box-shadow:0 30px 80px rgba(15,23,42,.08);min-height:0;}
+.display-component{height:100%;}
+.empty-state{text-align:center;color:#475569;padding:96px 24px;}
+.empty-state h3{margin-bottom:12px;color:#0f172a;font-size:24px;}
+
+@media(max-width:960px){.app-shell{grid-template-columns:1fr;}
+.nav-panel{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);
+ width:100%;padding:16px 12px;flex-direction:row;flex-wrap:wrap;
+ justify-content:center;gap:8px;}
+.nav-link{padding:8px 12px;font-size:14px;}
+.display-panel{padding:24px;}}
+@media(max-width:600px){.main-window-layout{flex-direction:column;}
+.main-window-layout aside{width:100%;border-bottom:1px solid #ccc;}
+.display-panel{padding:16px;}}
+
