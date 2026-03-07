@@ -40,30 +40,30 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/routeTest/ViewOne': RouteRecordInfo<
-      '/routeTest/ViewOne',
-      '/routeTest/ViewOne',
+    '/routeTest/vviewone': RouteRecordInfo<
+      '/routeTest/vviewone',
+      '/routeTest/vviewone',
       Record<never, never>,
       Record<never, never>,
       | never
     >,
-    '/routeTest/ViewTwo': RouteRecordInfo<
-      '/routeTest/ViewTwo',
-      '/routeTest/ViewTwo',
+    '/routeTest/vviewtwo': RouteRecordInfo<
+      '/routeTest/vviewtwo',
+      '/routeTest/vviewtwo',
       Record<never, never>,
       Record<never, never>,
       | never
     >,
-    '/settings/Credentials1': RouteRecordInfo<
-      '/settings/Credentials1',
-      '/settings/Credentials1',
+    '/settings/credentials': RouteRecordInfo<
+      '/settings/credentials',
+      '/settings/credentials',
       Record<never, never>,
       Record<never, never>,
       | never
     >,
-    '/ticket/Ticket1': RouteRecordInfo<
-      '/ticket/Ticket1',
-      '/ticket/Ticket1',
+    '/ticket/ticket': RouteRecordInfo<
+      '/ticket/ticket',
+      '/ticket/ticket',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -93,27 +93,27 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/render/views/routeTest/ViewOne.vue': {
+    'src/render/views/routeTest/vviewone.vue': {
       routes:
-        | '/routeTest/ViewOne'
+        | '/routeTest/vviewone'
       views:
         | never
     }
-    'src/render/views/routeTest/ViewTwo.vue': {
+    'src/render/views/routeTest/vviewtwo.vue': {
       routes:
-        | '/routeTest/ViewTwo'
+        | '/routeTest/vviewtwo'
       views:
         | never
     }
-    'src/render/views/settings/Credentials1.vue': {
+    'src/render/views/settings/credentials.vue': {
       routes:
-        | '/settings/Credentials1'
+        | '/settings/credentials'
       views:
         | never
     }
-    'src/render/views/ticket/Ticket1.vue': {
+    'src/render/views/ticket/ticket.vue': {
       routes:
-        | '/ticket/Ticket1'
+        | '/ticket/ticket'
       views:
         | never
     }
