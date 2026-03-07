@@ -33,16 +33,16 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/routetest1xxxxxx/viewone': RouteRecordInfo<
-      '/routetest1xxxxxx/viewone',
-      '/routetest1xxxxxx/viewone',
+    '/routetest/viewone': RouteRecordInfo<
+      '/routetest/viewone',
+      '/routetest/viewone',
       Record<never, never>,
       Record<never, never>,
       | never
     >,
-    '/routetest1xxxxxx/viewtwo': RouteRecordInfo<
-      '/routetest1xxxxxx/viewtwo',
-      '/routetest1xxxxxx/viewtwo',
+    '/routetest/viewtwo': RouteRecordInfo<
+      '/routetest/viewtwo',
+      '/routetest/viewtwo',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -80,15 +80,15 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/render/views/routetest1xxxxxx/viewone.vue': {
+    'src/render/views/routetest/viewone.vue': {
       routes:
-        | '/routetest1xxxxxx/viewone'
+        | '/routetest/viewone'
       views:
         | never
     }
-    'src/render/views/routetest1xxxxxx/viewtwo.vue': {
+    'src/render/views/routetest/viewtwo.vue': {
       routes:
-        | '/routetest1xxxxxx/viewtwo'
+        | '/routetest/viewtwo'
       views:
         | never
     }
