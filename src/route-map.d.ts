@@ -33,23 +33,16 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/routeTest/_layout': RouteRecordInfo<
-      '/routeTest/_layout',
-      '/routeTest/_layout',
+    '/routeTest/viewone': RouteRecordInfo<
+      '/routeTest/viewone',
+      '/routeTest/viewone',
       Record<never, never>,
       Record<never, never>,
       | never
     >,
-    '/routeTest/vviewone': RouteRecordInfo<
-      '/routeTest/vviewone',
-      '/routeTest/vviewone',
-      Record<never, never>,
-      Record<never, never>,
-      | never
-    >,
-    '/routeTest/vviewtwo': RouteRecordInfo<
-      '/routeTest/vviewtwo',
-      '/routeTest/vviewtwo',
+    '/routeTest/viewtwo': RouteRecordInfo<
+      '/routeTest/viewtwo',
+      '/routeTest/viewtwo',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -87,21 +80,15 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/render/views/routeTest/_layout.vue': {
+    'src/render/views/routeTest/viewone.vue': {
       routes:
-        | '/routeTest/_layout'
+        | '/routeTest/viewone'
       views:
         | never
     }
-    'src/render/views/routeTest/vviewone.vue': {
+    'src/render/views/routeTest/viewtwo.vue': {
       routes:
-        | '/routeTest/vviewone'
-      views:
-        | never
-    }
-    'src/render/views/routeTest/vviewtwo.vue': {
-      routes:
-        | '/routeTest/vviewtwo'
+        | '/routeTest/viewtwo'
       views:
         | never
     }
