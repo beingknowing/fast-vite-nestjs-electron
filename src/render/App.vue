@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import { RouterView, RouterLink, useRoute } from 'vue-router'
+import { RouterView, RouterLink, useRoute, useRouter } from 'vue-router'
 
-import type { RouteNamedMap } from 'vue-router/auto-routes'
-
-type NavLink = { label: string; to: keyof RouteNamedMap; description: string }
-
-const navLinks: NavLink[] = [
-  { label: '工单中心', to: '/ticket/ticket', description: '创建并提交新的 ServiceNow 工单' },
-  { label: '凭据管理', to: '/settings/credentials', description: '维护 Client ID、Secret 与主机地址' },
-  { label: '路由示例 · 一', to: '/routetest/viewone', description: '演示自动路由 ViewOne 页面' },
-  { label: '路由示例 · 二', to: '/routetest/viewtwo', description: '演示自动路由 ViewTwo 页面' },
-]
-
+const router = useRouter()
 const route = useRoute()
+
+
+
+// 动态从路由中生成 navLinks，过滤掉重定向路由（如 '/'）
+// 使用路由名称作为 key 以确保稳定的组件更新
+const navLinks = computed(() => {
+  return router.getRoutes()
+    .filter(r => r.path !== '/' && r.meta?.label)
+    .map(r => ({
+      to: r.path,
+      meta: r.meta
+    }))
+})
 </script>
 
 <template>
@@ -26,8 +29,8 @@ const route = useRoute()
     <nav class="nav-links">
       <RouterLink v-for="link in navLinks" :key="link.to" :to="link.to" class="nav-link"
         :class="{ 'is-active': route.path.startsWith(link.to) }">
-        <span class="nav-link__label">{{ link.label }}</span>
-        <span class="nav-link__desc">{{ link.description }}</span>
+        <span class="nav-link__label">{{ link.meta.label }}</span>
+        <span class="nav-link__desc">{{ link.meta.description }}</span>
       </RouterLink>
     </nav>
   </aside>

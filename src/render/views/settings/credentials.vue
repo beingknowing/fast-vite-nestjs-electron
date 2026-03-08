@@ -31,8 +31,16 @@
 </div>
 </template>
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCredentialStore } from '@/stores/credentials'
+
+definePage({
+  meta: {
+    label: '凭据管理',
+    description: '维护 Client ID、Secret 与主机地址'
+  }
+})
 
 const store = useCredentialStore()
 const { tableData, currentKey } = storeToRefs(store)

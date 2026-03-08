@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 // Explicit .vue extension ensures module resolution consistency across environments
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@/stores/ticket'
 import { CredentialItem } from '@/types/orm_types'
+
+definePage({
+    meta: {
+        label: '工单中心',
+        description: '创建并提交新的 ServiceNow 工单'
+    }
+})
 
 type Option = { des: string; queue: string }
 
