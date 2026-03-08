@@ -52,8 +52,6 @@ const navLinks = computed(() => {
 
 <style scoped>
 :global(html, body, #app) {
-  margin: 0;
-  min-height: 100%;
   font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
   background: #050915;
   color: #e2e8f0;
@@ -62,7 +60,8 @@ const navLinks = computed(() => {
 .app-shell {
   display: grid;
   grid-template-columns: 280px 1fr;
-
+  height: 98vh;
+  width: 99vw;
 }
 
 .nav-panel {
@@ -72,6 +71,7 @@ const navLinks = computed(() => {
   flex-direction: column;
   gap: 32px;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
+
 }
 
 .nav-brand h1 {
