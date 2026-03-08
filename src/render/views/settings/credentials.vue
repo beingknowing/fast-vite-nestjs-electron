@@ -38,7 +38,11 @@ import { useCredentialStore } from '@/stores/credentials'
 definePage({
   meta: {
     label: '凭据管理',
-    description: '维护 Client ID、Secret 与主机地址'
+    description: '维护 Client ID、Secret 与主机地址',
+    parent: '/settings',
+    parentLabel: '设置',
+    parentOrder: 3,
+    order: 200
   }
 })
 

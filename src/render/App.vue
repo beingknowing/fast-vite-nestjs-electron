@@ -6,7 +6,7 @@ const route = useRoute()
 
 
 
-// 动态从路由中生成 navLinks，过滤掉重定向路由（如 '/'）
+// 动态从路由中生成 navLinks，过滤掉重定向路由（如 '/'），并根据 meta.order 排序
 // 使用路由名称作为 key 以确保稳定的组件更新
 const navLinks = computed(() => {
   return router.getRoutes()
@@ -15,6 +15,7 @@ const navLinks = computed(() => {
       to: r.path,
       meta: r.meta
     }))
+    .sort((a, b) => (a.meta?.order ?? 0) - (b.meta?.order ?? 0))
 })
 </script>
 

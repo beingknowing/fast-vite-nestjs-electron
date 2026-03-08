@@ -5,7 +5,10 @@ definePage({
         isAdmin: false,
         requiresAuth: false,
         label: '路由示例 · 一',
-        description: '演示自动路由 ViewOne 页面'
+        description: '演示自动路由 ViewOne 页面',
+        parent: '/routetest',
+        parentLabel: '路由示例',
+        order: 300
     }
 })
 

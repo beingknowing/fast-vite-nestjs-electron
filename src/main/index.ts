@@ -3,25 +3,9 @@ import { ElectronIpcTransport } from "@doubleshot/nest-electron";
 import { NestFactory } from "@nestjs/core";
 import { app, Menu } from "electron";
 import { AppModule } from "./app.module";
+import { buildMenuTemplate } from "./buildMenuTemplate";
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
-/**
- * Builds the application menu template.
- * This function can be extended to support i18n and custom menu configurations.
- *
- * @returns Menu template array for Electron
- */
-function buildMenuTemplate(): Electron.MenuItemConstructorOptions[] {
-  // Menu labels can be customized via environment variables or config
-  const viewLabel = process.env.MENU_VIEW_LABEL || "View";
-  return [
-    {
-      label: viewLabel,
-      submenu: [{ role: "reload" }, { role: "toggleDevTools" }],
-    },
-  ];
-}
-
 async function electronAppInit() {
   const isDev = !app.isPackaged;
   app.on("window-all-closed", () => {

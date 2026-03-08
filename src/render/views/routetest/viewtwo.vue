@@ -2,7 +2,10 @@
 definePage({
   meta: {
     label: '路由示例 · 二',
-    description: '演示自动路由 ViewTwo 页面'
+    description: '演示自动路由 ViewTwo 页面',
+    parent: '/routetest',
+    parentLabel: '路由示例',
+    order: 400
   }
 })
 </script>

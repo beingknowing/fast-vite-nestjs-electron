@@ -18,7 +18,7 @@ import { AppServiceStore } from "./app.service.store";
         const win = new BrowserWindow({
           width: 1280,
           height: 1024,
-          autoHideMenuBar: true,
+          autoHideMenuBar: false,
           webPreferences: {
             contextIsolation: true,
             preload: join(__dirname, "../preload/index.js"),
