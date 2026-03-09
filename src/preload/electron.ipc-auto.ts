@@ -14,6 +14,8 @@ export const ipcInvoke = {
     ipcRenderer.invoke('getCurrent', ...args) as unknown as PreloadInvokeReturn<'getCurrent', true>,
   msg: (...args: IpcInvokeArgs<'msg'>): PreloadInvokeReturn<'msg', false> =>
     ipcRenderer.invoke('msg', ...args) as unknown as PreloadInvokeReturn<'msg', false>,
+  openLink: (...args: IpcInvokeArgs<'open-link'>): PreloadInvokeReturn<'open-link', true> =>
+    ipcRenderer.invoke('open-link', ...args) as unknown as PreloadInvokeReturn<'open-link', true>,
   readCredential: (...args: IpcInvokeArgs<'readCredential'>): PreloadInvokeReturn<'readCredential', true> =>
     ipcRenderer.invoke('readCredential', ...args) as unknown as PreloadInvokeReturn<'readCredential', true>,
   saveCredential: (...args: IpcInvokeArgs<'saveCredential'>): PreloadInvokeReturn<'saveCredential', true> =>

@@ -72,11 +72,11 @@ export const useTicketStore = defineStore("ticket", () => {
 
     try {
       isSubmitting.value = true;
-      console.log("🚀 ~ submitTicket ~ isSubmitting:", isSubmitting.value);
+      // console.log("🚀 ~ submitTicket ~ isSubmitting:", isSubmitting.value);
       setResult();
       const payload = toRaw(ticket);
 
-      console.log("Submitting ticket:", payload, "Queue:", payload.queue_val);
+      // console.log("Submitting ticket:", payload, "Queue:", payload.queue_val);
       const res = await window.electron.ticket(payload); //typedInvoke(ipcChannels.ticket, payload)
       setResult(res);
     } catch (error) {

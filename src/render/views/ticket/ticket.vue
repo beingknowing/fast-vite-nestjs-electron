@@ -7,6 +7,9 @@ import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@/stores/ticket'
 import { CredentialItem } from '@/types/orm_types'
 
+// Expose window.electron for template usage
+const electron = window.electron;
+
 definePage({
     meta: {
         label: '工单中心',
@@ -28,7 +31,7 @@ const options: Option[] = [
 const ticketStore = useTicketStore()
 const { ticket, validationMessages, isFormValid, result } = storeToRefs(ticketStore)
 const isSubmitting = ref(false);
-console.log("🚀 ~ isSubmitting:", isSubmitting);
+// console.log("🚀 ~ isSubmitting:", isSubmitting);
 const current = reactive<CredentialItem>({
     sn_host: 'test',
 })
@@ -37,8 +40,8 @@ onMounted(() => {
     window.electron.getCurrent().then(curr => {
         Object.assign(current, curr)
 
-        console.log("🚀 ~ current:", current)
-        console.log("🚀 ~ curr:", curr)
+        // console.log("🚀 ~ current:", current)
+        // console.log("🚀 ~ curr:", curr)
     })
     window.electron.getDomainUser()
         .then(userName => ticketStore.setTicketField('userName', userName))
@@ -71,8 +74,8 @@ const link = computed(() =>
 )
 
 const enableSubmitBtn = computed(() => {
-    console.log("🚀 ~ isFormValid.value:", isFormValid.value)
-    console.log("🚀 ~ !isSubmitting.value:", !isSubmitting.value)
+    // console.log("🚀 ~ isFormValid.value:", isFormValid.value)
+    // console.log("🚀 ~ !isSubmitting.value:", !isSubmitting.value)
     return isFormValid.value && !isSubmitting.value
 
 })
@@ -115,7 +118,8 @@ async function submitTicket() {
 
     <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
-    <el-link :href="link.href" target="_blank">{{ link.txt }}</el-link>
+    <el-link :href="link.href" target="_blank" @click.prevent="electron.openLink(link.href)">{{ link.txt
+    }}</el-link>
 </el-card></template>
 
 <style scoped>
