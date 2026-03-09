@@ -55,6 +55,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@go-task/cli",
       "@nestjs/core",
       "electron",
       "esbuild",
