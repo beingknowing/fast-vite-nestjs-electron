@@ -1,13 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import Store from "electron-store";
-import { CredentialState } from "../../types/orm_types";
+import { CredentialState, TicketResult } from "../../types/orm_types";
 const store = new Store({});
 
 @Injectable()
 export class AppServiceStore {
-  private readonly storeKey = "credential";
+  [x: string]: any;
+  private readonly credentialStoreKey = "credential";
   public async saveCredential(data: CredentialState): Promise<true> {
-    store.set(this.storeKey, data);
+    store.set(this.credentialStoreKey, data);
     return true;
   }
   public async readCredential(): Promise<CredentialState> {
@@ -16,7 +17,9 @@ export class AppServiceStore {
       "🚀 ~ AppServiceStore ~ readCredential ~  store.path:",
       store.path,
     );
-    const credential = (store.get(this.storeKey) as CredentialState) || {
+    const credential = (store.get(
+      this.credentialStoreKey,
+    ) as CredentialState) || {
       tableData: [
         {
           client_secret: "",
@@ -50,5 +53,25 @@ export class AppServiceStore {
       all.tableData.find((i) => i.isCurrent) ??
       all.tableData.find((i) => i.sn_host == "https://pfestg.service-now.com");
     return v!;
+  }
+  private readonly ticketHistoryStoreKey = "ticketHistory";
+  public async saveTicketHistory(item: TicketResult) {
+    const history =
+      (store.get(this.ticketHistoryStoreKey) as TicketResult[]) || [];
+    if (history.find((i) => i.display_value === item.display_value)) {
+      return;
+    }
+    history.unshift(item);
+    store.set(this.ticketHistoryStoreKey, history);
+  }
+
+  public async getTicketHistory(): Promise<TicketResult[]> {
+    const history =
+      (store.get(this.ticketHistoryStoreKey) as TicketResult[]) || [];
+    return history;
+  }
+
+  public async clearTicketHistory(): Promise<void> {
+    store.delete(this.ticketHistoryStoreKey);
   }
 }

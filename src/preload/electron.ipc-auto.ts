@@ -8,8 +8,12 @@ type PreloadInvokeReturn<T extends IpcChannel, TAsync extends boolean> =
   TAsync extends true ? IpcInvokeReturn<T> : IpcInvokeMap[T]['return']
 
 export const ipcInvoke = {
+  clearTicketHistory: (...args: IpcInvokeArgs<'clear-ticket-history'>): PreloadInvokeReturn<'clear-ticket-history', true> =>
+    ipcRenderer.invoke('clear-ticket-history', ...args) as unknown as PreloadInvokeReturn<'clear-ticket-history', true>,
   getDomainUser: (...args: IpcInvokeArgs<'get-domain-user'>): PreloadInvokeReturn<'get-domain-user', true> =>
     ipcRenderer.invoke('get-domain-user', ...args) as unknown as PreloadInvokeReturn<'get-domain-user', true>,
+  getTicketHistory: (...args: IpcInvokeArgs<'get-ticket-history'>): PreloadInvokeReturn<'get-ticket-history', true> =>
+    ipcRenderer.invoke('get-ticket-history', ...args) as unknown as PreloadInvokeReturn<'get-ticket-history', true>,
   getCurrent: (...args: IpcInvokeArgs<'getCurrent'>): PreloadInvokeReturn<'getCurrent', true> =>
     ipcRenderer.invoke('getCurrent', ...args) as unknown as PreloadInvokeReturn<'getCurrent', true>,
   msg: (...args: IpcInvokeArgs<'msg'>): PreloadInvokeReturn<'msg', false> =>
@@ -18,6 +22,8 @@ export const ipcInvoke = {
     ipcRenderer.invoke('open-link', ...args) as unknown as PreloadInvokeReturn<'open-link', true>,
   readCredential: (...args: IpcInvokeArgs<'readCredential'>): PreloadInvokeReturn<'readCredential', true> =>
     ipcRenderer.invoke('readCredential', ...args) as unknown as PreloadInvokeReturn<'readCredential', true>,
+  saveTicketHistory: (...args: IpcInvokeArgs<'save-ticket-history'>): PreloadInvokeReturn<'save-ticket-history', true> =>
+    ipcRenderer.invoke('save-ticket-history', ...args) as unknown as PreloadInvokeReturn<'save-ticket-history', true>,
   saveCredential: (...args: IpcInvokeArgs<'saveCredential'>): PreloadInvokeReturn<'saveCredential', true> =>
     ipcRenderer.invoke('saveCredential', ...args) as unknown as PreloadInvokeReturn<'saveCredential', true>,
   ticket: (...args: IpcInvokeArgs<'ticket'>): PreloadInvokeReturn<'ticket', true> =>
