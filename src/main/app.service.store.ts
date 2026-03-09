@@ -31,14 +31,14 @@ export class AppServiceStore {
         {
           client_secret: "",
           client_id: "",
-          sn_host: "https://pfeprod.service-now.com",
+          sn_host: "https://pfestg.service-now.com",
           isCurrent: false,
           editing: false,
         },
         {
           client_secret: "",
           client_id: "",
-          sn_host: "https://pfestg.service-now.com",
+          sn_host: "https://pfeprod.service-now.com",
           isCurrent: false,
           editing: false,
         },

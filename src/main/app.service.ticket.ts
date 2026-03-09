@@ -86,12 +86,21 @@ export class AppServiceTicket {
       };
 
       return await axios(config)
-        .then(function (response) {
+        .then((response) => {
           console.log(
             "🚀 ~ AppServiceTicket ~ submitTicket ~ response:",
             response.data,
           );
-          return response.data as TicketResponse;
+          const res = response.data as TicketResponse;
+          if (res?.result) {
+            for (const result of res.result) {
+              result.ticket_link = `${current.sn_host}/now/sow/record/incident/${result.sys_id}`;
+              result.createTime = new Date().toLocaleString();
+              this.store.saveTicketHistory(result);
+            }
+          }
+
+          return res;
         })
         .catch(function (error) {
           console.log(error);
