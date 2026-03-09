@@ -1,23 +1,38 @@
 import { Injectable } from "@nestjs/common";
 import Store from "electron-store";
 import { CredentialState, TicketResult } from "../../types/orm_types";
-const store = new Store({});
 
+function resolveStoreEncryptionKey(): string {
+  const key = process.env.ELECTRON_STORE_ENCRYPTION_KEY?.trim();
+  if (key) return key;
+
+  // Keep data encrypted in local/dev usage even if env is missing.
+  return "fast-vite-nestjs-electron-local-encryption-key";
+}
+
+const storeCredential = new Store({
+  encryptionKey: resolveStoreEncryptionKey(),
+  name: "setting_1",
+});
+const storeHistories = new Store({
+  // encryptionKey: resolveStoreEncryptionKey(),
+  name: "setting_2",
+});
 @Injectable()
 export class AppServiceStore {
   [x: string]: any;
   private readonly credentialStoreKey = "credential";
   public async saveCredential(data: CredentialState): Promise<true> {
-    store.set(this.credentialStoreKey, data);
+    storeCredential.set(this.credentialStoreKey, data);
     return true;
   }
   public async readCredential(): Promise<CredentialState> {
     // store.path
     console.log(
       "🚀 ~ AppServiceStore ~ readCredential ~  store.path:",
-      store.path,
+      storeCredential.path,
     );
-    const credential = (store.get(
+    const credential = (storeCredential.get(
       this.credentialStoreKey,
     ) as CredentialState) || {
       tableData: [
@@ -57,21 +72,21 @@ export class AppServiceStore {
   private readonly ticketHistoryStoreKey = "ticketHistory";
   public async saveTicketHistory(item: TicketResult) {
     const history =
-      (store.get(this.ticketHistoryStoreKey) as TicketResult[]) || [];
+      (storeHistories.get(this.ticketHistoryStoreKey) as TicketResult[]) || [];
     if (history.find((i) => i.display_value === item.display_value)) {
       return;
     }
     history.unshift(item);
-    store.set(this.ticketHistoryStoreKey, history);
+    storeHistories.set(this.ticketHistoryStoreKey, history);
   }
 
   public async getTicketHistory(): Promise<TicketResult[]> {
     const history =
-      (store.get(this.ticketHistoryStoreKey) as TicketResult[]) || [];
+      (storeHistories.get(this.ticketHistoryStoreKey) as TicketResult[]) || [];
     return history;
   }
 
   public async clearTicketHistory(): Promise<void> {
-    store.delete(this.ticketHistoryStoreKey);
+    storeHistories.delete(this.ticketHistoryStoreKey);
   }
 }

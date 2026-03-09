@@ -16,8 +16,8 @@
 
     <el-table-column label="Client Secret">
       <template #default="{ row }">
-        <span v-if="!row.editing">{{ row.client_secret }}</span>
-        <el-input v-else v-model="row.client_secret" size="small"></el-input>
+        <span v-if="!row.editing">******</span>
+        <el-input v-else v-model="row.client_secret" size="small" type="password"></el-input>
       </template>
     </el-table-column>
 
