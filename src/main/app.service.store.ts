@@ -11,6 +11,11 @@ export class AppServiceStore {
     return true;
   }
   public async readCredential(): Promise<CredentialState> {
+    // store.path
+    console.log(
+      "🚀 ~ AppServiceStore ~ readCredential ~  store.path:",
+      store.path,
+    );
     const credential = (store.get(this.storeKey) as CredentialState) || {
       tableData: [
         {
