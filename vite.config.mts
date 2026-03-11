@@ -63,7 +63,7 @@ export default defineConfig({
       entry: "src/main/index.ts",
       outDir: "dist/main",
       external: [
-        ...Object.keys(pkg.dependencies || {}),
+        // ...Object.keys(pkg.dependencies || {}),
         "electron",
         /^node:/, // 排除 node 原生模块
       ],
@@ -87,13 +87,13 @@ export default defineConfig({
   },
   base: "./",
   build: {
-    sourcemap: true,
+    sourcemap: process.env.npm_lifecycle_event !== "build",
     outDir: join(__dirname, "dist/render"),
     emptyOutDir: true,
     rollupOptions: {
       // 将 package.json 中的所有依赖排除在打包之外
       external: [
-        ...Object.keys(pkg.dependencies || {}),
+        // ...Object.keys(pkg.dependencies || {}),
         "electron",
         /^node:/, // 排除 node 原生模块
       ],

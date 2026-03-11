@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useCredentialStore } from '@/stores/credentials'
+import { useCredentialStore } from '@render/stores/credentials'
 
 definePage({
   meta: {

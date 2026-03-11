@@ -11,11 +11,12 @@ if (isWindowsDomainEnvironment) {
  * @see https://www.electron.build/configuration/configuration
  */
 const config = {
+  asar: true,
   directories: {
-    output: 'dist/electron',
+    output: 'build',
   },
   publish: null,
-  npmRebuild: false,
+  npmRebuild: true,
   win: {
     signAndEditExecutable: !isWindowsDomainEnvironment,
     icon: 'logo.png',
@@ -24,6 +25,7 @@ const config = {
     'dist/main/**/*',
     'dist/preload/**/*',
     'dist/render/**/*',
+    "node_modules/**/*"
   ],
 }
 

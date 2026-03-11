@@ -23,10 +23,6 @@
     "emitDecoratorMetadata": true,
     "outDir": "./dist/",
     "paths": {
-      "@/*": [
-        "src/render/*",
-        "./*"
-      ],
       "@render/*": [
         "src/render/*"
       ],

@@ -13,10 +13,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
-      "@/*": [
-        "src/render/*",
-        "./*"
-      ],
       "@render/*": [
         "src/render/*"
       ],
