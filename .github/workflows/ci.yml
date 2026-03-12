@@ -39,6 +39,8 @@ jobs:
         run: pnpm i
 
       - name: Build
+        env:
+          ELECTRON_BUILDER_PUBLISH: never
         run: pnpm run build
 
   release:
@@ -64,5 +66,6 @@ jobs:
 
       - name: Build and publish release artifacts
         env:
+          ELECTRON_BUILDER_PUBLISH: always
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm run build
