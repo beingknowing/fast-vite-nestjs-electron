@@ -4,7 +4,7 @@ import { NestFactory } from "@nestjs/core";
 import { app, Menu } from "electron";
 import { AppModule } from "./app.module";
 import { buildMenuTemplate } from "./buildMenuTemplate";
-
+import 'reflect-metadata';
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 async function electronAppInit() {
   const isDev = !app.isPackaged;

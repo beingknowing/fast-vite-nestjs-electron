@@ -21,6 +21,7 @@
     "@nestjs/common": "^11.1.16",
     "@nestjs/core": "^11.1.16",
     "@nestjs/microservices": "^11.1.16",
+    "axios": "^1.13.6",
     "electron-store": "^11.0.2",
     "electron-unhandled": "^5.0.0",
     "element-plus": "^2.13.5",
