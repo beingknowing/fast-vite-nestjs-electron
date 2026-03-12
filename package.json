@@ -24,6 +24,7 @@
     "axios": "^1.13.6",
     "call-bind-apply-helpers": "^1.0.2",
     "electron-store": "^11.0.2",
+    "electron-updater": "^6.6.2",
     "electron-unhandled": "^5.0.0",
     "es-define-property": "^1.0.1",
     "element-plus": "^2.13.5",

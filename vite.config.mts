@@ -12,8 +12,6 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 
-import pkg from "./package.json";
-
 // https://vitejs.dev/config/
 export default defineConfig({
   root: join(__dirname, "src/render"),
