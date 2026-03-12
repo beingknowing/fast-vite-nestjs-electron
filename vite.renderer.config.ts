@@ -84,7 +84,7 @@ export default defineConfig((env) => {
     resolve: {
       // preserveSymlinks: true,
       alias: {
-        '@': resolve(__dirname, './src/render'),
+        '@/': resolve(__dirname, './'),
         '@render': resolve(__dirname, './src/render'),
         '@main': resolve(__dirname, './src/main')
         // '@': fileURLToPath(new URL('./src/renderer', import.meta.url))

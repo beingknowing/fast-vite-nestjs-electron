@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@render/stores/ticket'
-import { CredentialItem } from '@render/types/orm_types'
+import { CredentialItem } from '@/types/orm_types'
 
 // Expose window.electron for template usage
 const electron = window.electron;
@@ -119,7 +119,7 @@ async function submitTicket() {
     <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
     <el-link :href="link.href" target="_blank" @click.prevent="electron.openLink(link.href)">{{ link.txt
-        }}</el-link>
+    }}</el-link>
 </el-card></template>
 
 <style scoped>
