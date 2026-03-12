@@ -12,6 +12,9 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 
+const electronPublishMode =
+  process.env.ELECTRON_BUILDER_PUBLISH === "always" ? "always" : "never";
+
 // https://vitejs.dev/config/
 export default defineConfig({
   root: join(__dirname, "src/render"),
@@ -68,6 +71,9 @@ export default defineConfig({
       electron: {
         build: {
           config: "./electron-builder.config.js",
+          cliOptions: {
+            publish: electronPublishMode,
+          },
         },
         preload: {
           entry: "src/preload/index.ts",
