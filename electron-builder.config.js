@@ -2,7 +2,7 @@ const isWindowsDomainEnvironment = process.platform === 'win32' && Boolean(
   process.env.USERDNSDOMAIN || (process.env.USERDOMAIN && process.env.USERDOMAIN !== process.env.COMPUTERNAME),
 )
 
-const hasGitHubToken = Boolean(process.env.GH_TOKEN || process.env.GITHUB_TOKEN)
+const hasGitHubToken = Boolean(process.env.GH_TOKEN)
 const wantsPublish = process.env.ELECTRON_BUILDER_PUBLISH === 'always'
 const shouldPublishToGitHub = wantsPublish && hasGitHubToken
 
@@ -13,7 +13,7 @@ if (isWindowsDomainEnvironment) {
 }
 
 if (wantsPublish && !hasGitHubToken) {
-  console.warn(' ⚠️  ELECTRON_BUILDER_PUBLISH=always was set but GH_TOKEN/GITHUB_TOKEN is missing. Build will continue with publish disabled.')
+  console.warn(' ⚠️  ELECTRON_BUILDER_PUBLISH=always was set but GH_TOKEN is missing. Build will continue with publish disabled.')
 }
 
 /**
