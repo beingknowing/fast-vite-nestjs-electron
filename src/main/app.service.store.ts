@@ -2,6 +2,10 @@ import { Injectable } from "@nestjs/common";
 import Store from "electron-store";
 import { CredentialState, TicketResult } from "../../types/orm_types";
 
+type StoreCtor = typeof Store;
+const StoreConstructor = ((Store as unknown as { default?: StoreCtor }).default ??
+  Store) as StoreCtor;
+
 function resolveStoreEncryptionKey(): string {
   const key = process.env.ELECTRON_STORE_ENCRYPTION_KEY?.trim();
   if (key) return key;
@@ -10,11 +14,11 @@ function resolveStoreEncryptionKey(): string {
   return "fast-vite-nestjs-electron-local-encryption-key";
 }
 
-const storeCredential = new Store({
+const storeCredential = new StoreConstructor({
   encryptionKey: resolveStoreEncryptionKey(),
   name: "setting_1",
 });
-const storeHistories = new Store({
+const storeHistories = new StoreConstructor({
   // encryptionKey: resolveStoreEncryptionKey(),
   name: "setting_2",
 });

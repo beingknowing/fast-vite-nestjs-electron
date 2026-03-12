@@ -4,9 +4,8 @@
 
 # ⚡Vite + Electron + Nestjs Template
 
-This template is used to build [vite](https://vitejs.dev/) + [electron](https://www.electronjs.org/) + [nestjs](https://nestjs.com/) projects. Build with [Doubleshot](https://github.com/Doubleshotjs/doubleshot), crazy fast!
-
-🎉 [Doubleshot](https://github.com/Doubleshotjs/doubleshot) is a whole new set of tools to help you quickly build and start a node backend or electron main process.
+This template is used to build [vite](https://vitejs.dev/) + [electron](https://www.electronjs.org/) + [nestjs](https://nestjs.com/) projects.
+It now uses **Electron Forge + official Vite plugin** for development and packaging.
 
 This is a vue version of the template, you can also use:
 
@@ -19,7 +18,7 @@ This is a template based on my repo: [fast-vite-electron](https://github.com/Arc
 
 ## Features
 
-- 🔨 [vite-plugin-doubleshot](https://github.com/archergu/doubleshot/tree/main/packages/plugin-vite#readme) to run/build electron main process or node backend.
+- 🔨 [@electron-forge/plugin-vite](https://www.electronforge.io/config/plugins/vite) to build main/preload/renderer.
   <br>
 
 - 🛻 An electron ipc transport for [nestjs](https://nestjs.com/) that provides simple ipc communication.
@@ -28,7 +27,14 @@ This is a template based on my repo: [fast-vite-electron](https://github.com/Arc
 - 🪟 An electron module for [nestjs](https://nestjs.com/) to launch electron windows.
   <br>
 
-- ⏩ Quick start and build, powered by [tsup](https://tsup.egoist.dev/) and [electron-builder](https://www.electron.build/) integrated in [@doubleshot/builder](https://github.com/Doubleshotjs/doubleshot/tree/main/packages/builder)
+- ⏩ Quick start and packaging with [Electron Forge](https://www.electronforge.io/)
+
+## Build Stack
+
+- Main process: NestJS + Electron
+- Renderer: Vue + Vite
+- Packaging: Electron Forge (`maker-squirrel`)
+- Config files: TypeScript (`forge.config.ts`, `vite.main.config.ts`, `vite.preload.config.ts`, `vite.renderer.config.ts`)
 
 ## How to use
 
@@ -42,13 +48,27 @@ This is a template based on my repo: [fast-vite-electron](https://github.com/Arc
   # run in developer mode
   pnpm dev
 
-  # build
+  # package app directory only
+  pnpm package
+
+  # build windows installer
   pnpm build
   ```
 
+## Forge Commands
+
+```bash
+# make distributables (default)
+pnpm make
+
+# for certificate-chain-restricted environments
+pnpm make:insecure
+```
+
 ## Note for PNPM
 
-This project requires `pnpm` as the package manager. In order for your dependencies to be bundled correctly, you'll need to adjust your `.npmrc` to use any one the following approaches (ref: [#6389](https://github.com/electron-userland/electron-builder/issues/6289#issuecomment-1042620422)):
+This project requires `pnpm` as the package manager.
+Electron Forge + pnpm requires hoisted dependency layout.
 
 ```
 node-linker=hoisted
@@ -61,6 +81,12 @@ public-hoist-pattern=*
 ```
 shamefully-hoist=true
 ```
+
+If your network MITMs TLS (corporate proxy / private CA), you may need one of:
+
+- trust your corporate root CA in Node,
+- use mirror/proxy settings in `.npmrc`,
+- temporarily run `pnpm make:insecure`.
 
 ## Relative
 

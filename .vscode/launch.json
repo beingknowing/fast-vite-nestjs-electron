@@ -8,10 +8,11 @@
       "cwd": "${workspaceRoot}",
       "runtimeArgs": [
         "run-script",
-        "debug"
+        "dev"
       ],
       "runtimeExecutable": "npm",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "protocol": "inspector"
     }
   ]
 }

@@ -10,6 +10,11 @@ import { AppServiceTicket } from "./app.service.ticket";
 import { AppServiceOS } from "./app.service.os";
 import { AppServiceStore } from "./app.service.store";
 
+type ForgeViteGlobals = {
+  MAIN_WINDOW_VITE_DEV_SERVER_URL?: string;
+  MAIN_WINDOW_VITE_NAME?: string;
+};
+
 @Module({
   imports: [
     ElectronModule.registerAsync({
@@ -21,7 +26,7 @@ import { AppServiceStore } from "./app.service.store";
           autoHideMenuBar: false,
           webPreferences: {
             contextIsolation: true,
-            preload: join(__dirname, "../preload/index.js"),
+            preload: join(__dirname, 'preload', 'index.js'),
           },
         });
 
@@ -29,11 +34,16 @@ import { AppServiceStore } from "./app.service.store";
           win.destroy();
         });
 
-        const URL = isDev
-          ? process.env.DS_RENDERER_URL
-          : `file://${join(app.getAppPath(), "dist/render/index.html#/")}`;
+        const forgeGlobals = globalThis as typeof globalThis & ForgeViteGlobals;
+        const devServerUrl = process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL ?? forgeGlobals.MAIN_WINDOW_VITE_DEV_SERVER_URL;
+        const rendererName = forgeGlobals.MAIN_WINDOW_VITE_NAME ?? 'main_window';
 
-        win.loadURL(URL!);
+        if (isDev && devServerUrl) {
+          win.loadURL(devServerUrl);
+        } else {
+          win.loadFile(join(__dirname, '..', 'renderer', rendererName, 'index.html'));
+        }
+
 
         return { win };
       },
@@ -42,4 +52,4 @@ import { AppServiceStore } from "./app.service.store";
   controllers: [AppController, AppControllerCredential, AppControllerTicket],
   providers: [AppService, AppServiceOS, AppServiceTicket, AppServiceStore],
 })
-export class AppModule {}
+export class AppModule { }

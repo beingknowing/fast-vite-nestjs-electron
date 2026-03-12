@@ -5,7 +5,8 @@
     // "**/*.ts",
     "./**/*.d.ts",
     "./src/render/**/*",
-    "vite.config.mts",
+    "vite.renderer.config.ts",
+    "vite.base.config.ts",
   ],
   "compilerOptions": {
     "module": "ESNext",
