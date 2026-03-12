@@ -43,6 +43,12 @@ const config = {
     signAndEditExecutable: !isWindowsDomainEnvironment,
     icon: 'logo.png',
   },
+  mac: {
+    target: ['zip'],
+  },
+  linux: {
+    target: ['AppImage'],
+  },
   files: [
     'dist/main/**/*',
     'dist/preload/**/*',
