@@ -4,7 +4,7 @@ import { Controller } from "@nestjs/common";
 import { Payload } from "@nestjs/microservices";
 import { AppService } from "./app.service";
 import { AppServiceStore } from "./app.service.store";
-import type { CredentialItem, CredentialState } from "@/types/orm_types";
+import type { CredentialItem } from "@/types/orm_types";
 
 @Controller()
 export class AppControllerCredential {
@@ -15,12 +15,12 @@ export class AppControllerCredential {
   ) { }
 
   @IpcHandle("saveCredential")
-  public async saveCredential(@Payload() data: CredentialState): Promise<true> {
+  public async saveCredential(@Payload() data: CredentialItem[]): Promise<true> {
     return await this.store.saveCredential(data);
   }
 
   @IpcHandle("readCredential")
-  public async readCredential(): Promise<CredentialState> {
+  public async readCredential(): Promise<CredentialItem[]> {
     const credential = await this.store.readCredential();
 
     return credential;

@@ -42,8 +42,3 @@ export interface CredentialItem {
   editing?: boolean;
   env: 'pfetst' | 'pfestg' | 'pfeprod'
 }
-
-export interface CredentialState {
-  tableData: CredentialItem[];
-  // currentKey: CredentialItem['sn_host'] | undefined;
-}

@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import { CredentialState, CredentialItem } from '@/types/orm_types'
+import { toRaw } from 'vue'
+import type { CredentialItem } from '@/types/orm_types'
 
 
 export const useCredentialStore = defineStore('credential', {
-    state(): CredentialState {
+    state(): { tableData: CredentialItem[] } {
 
         return {
             tableData: [
@@ -33,7 +34,9 @@ export const useCredentialStore = defineStore('credential', {
             this.tableData.forEach((r) => {
                 r.editing = false
             })
-            return await window.electron.saveCredential(toRaw(this.$state))
+            // Use toRaw to unwrap reactive proxy for IPC serialization
+            const data = toRaw(this.tableData)
+            return await window.electron.saveCredential(data)
         },
         async loadCredential() {
             const state = await window.electron.readCredential()
@@ -42,8 +45,8 @@ export const useCredentialStore = defineStore('credential', {
         async clearCredential() {
             await window.electron.clearCredential()
         },
-        setTableData(state: CredentialState) {
-            this.tableData = state.tableData
+        setTableData(state: CredentialItem[]) {
+            this.tableData = state
         }
     },
 

@@ -9,6 +9,9 @@ import { AppControllerTicket } from "./app.controller.ticket";
 import { AppServiceTicket } from "./app.service.ticket";
 import { AppServiceOS } from "./app.service.os";
 import { AppServiceStore } from "./app.service.store";
+import { AppServiceCredential } from "./app.service.credential";
+import { AppServiceTicketHistory } from "./app.service.ticket-history";
+import { AppServiceTicketOptions } from "./app.service.ticket-options";
 
 @Module({
   imports: [
@@ -46,6 +49,6 @@ import { AppServiceStore } from "./app.service.store";
     }),
   ],
   controllers: [AppController, AppControllerCredential, AppControllerTicket],
-  providers: [AppService, AppServiceOS, AppServiceTicket, AppServiceStore],
+  providers: [AppService, AppServiceOS, AppServiceTicket, AppServiceCredential, AppServiceTicketHistory, AppServiceTicketOptions, AppServiceStore],
 })
 export class AppModule { }
