@@ -1,6 +1,7 @@
 {
   "name": "fast-vite-nestjs-electron",
   "version": "0.0.2",
+  "packageManager": "pnpm@10.29.3",
   "description": "Vite + Electron with Doubleshot, so fast! ⚡",
   "author": "calmripple",
   "main": "dist/main/index.js",
