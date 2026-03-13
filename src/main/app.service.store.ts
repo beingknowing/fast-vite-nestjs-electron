@@ -20,7 +20,7 @@ function resolveStoreEncryptionKey(): string {
   if (key) return key;
 
   // Keep data encrypted in local/dev usage even if env is missing.
-  return "fast-vite-nestjs-electron-local-encryption-key";
+  return "quick-ticket-to-queue-local-encryption-key";
 }
 
 const storeCredential = new Store({

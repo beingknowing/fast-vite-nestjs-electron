@@ -23,9 +23,9 @@ const navLinks = computed(() => {
 <div class="app-shell">
   <aside class="nav-panel">
     <div class="nav-brand">
-      <p class="eyebrow">Support Console</p>
-      <h1>Service Desk</h1>
-      <p class="nav-subtitle">左侧导航，右侧工作区</p>
+      <p class="eyebrow">Quick Ticket to Queue</p>
+      <h1>工单控制台</h1>
+      <p class="nav-subtitle">常用队列、凭据配置与工单提交入口</p>
     </div>
     <nav class="nav-links">
       <RouterLink v-for="link in navLinks" :key="link.to" :to="link.to" class="nav-link"
@@ -41,8 +41,8 @@ const navLinks = computed(() => {
       <RouterView v-slot="{ Component }">
         <component v-if="Component" :is="Component" class="display-component" />
         <div v-else class="empty-state">
-          <h3>欢迎来到控制台</h3>
-          <p>请选择左侧导航开始工作，或新建一个工单页面。</p>
+          <h3>欢迎使用 Quick Ticket to Queue</h3>
+          <p>请选择左侧功能开始提交工单或维护配置。</p>
         </div>
       </RouterView>
     </div>

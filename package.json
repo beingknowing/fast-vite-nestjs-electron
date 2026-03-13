@@ -1,9 +1,9 @@
 {
   "name": "quick-ticket-to-queue",
-  "productName": "quick ticket to queue",
+  "productName": "Quick Ticket to Queue",
   "version": "0.0.2",
   "packageManager": "pnpm@10.29.3",
-  "description": "Vite + Electron with Doubleshot, so fast! ⚡",
+  "description": "Desktop app for quickly submitting ServiceNow tickets to common queues",
   "author": "calmripple",
   "main": "dist/main/index.js",
   "scripts": {

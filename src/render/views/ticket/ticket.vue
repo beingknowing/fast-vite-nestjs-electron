@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, reactive, ref, onMounted } from 'vue'
-// Explicit .vue extension ensures module resolution consistency across environments
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 
@@ -9,7 +8,6 @@ import { useTicketStore, fieldLabels } from '@render/stores/ticket'
 import { CredentialItem, TicketQueueOption } from '@/types/orm_types'
 import { getEnvTagType } from '@render/utils/env-tag'
 
-// Expose window.electron for template usage
 const electron = window.electron;
 const route = useRoute()
 const router = useRouter()
@@ -26,7 +24,6 @@ const options = ref<TicketQueueOption[]>([])
 const ticketStore = useTicketStore()
 const { ticket, validationMessages, isFormValid, result } = storeToRefs(ticketStore)
 const isSubmitting = ref(false);
-// console.log("🚀 ~ isSubmitting:", isSubmitting);
 const current = reactive<CredentialItem>({
     env: 'pfetst',
 })
@@ -62,10 +59,6 @@ const querySearch = (query: string, cb: (results: TicketQueueOption[]) => void) 
                 item.queue.toLowerCase().includes(query.toLowerCase()),
         ),
     )
-// window.electron.getDomainUser().then(userName => ticketStore.setTicketField('userName', userName))
-// typedInvoke(ipcChannels.getDomainUser).then((userName) => {
-//     ticketStore.setTicketField('userName', userName)
-// })
 
 
 const link = computed(() =>
@@ -81,8 +74,6 @@ const link = computed(() =>
 )
 
 const enableSubmitBtn = computed(() => {
-    // console.log("🚀 ~ isFormValid.value:", isFormValid.value)
-    // console.log("🚀 ~ !isSubmitting.value:", !isSubmitting.value)
     return credentialReady.value && isFormValid.value && !isSubmitting.value
 
 })
@@ -124,27 +115,23 @@ const goCredentialSetting = async () => {
         </div>
 
         <el-alert v-if="!credentialReady" type="warning" show-icon :closable="false">
-            <template #title>当前凭据未配置，请先前往凭据管理设置 credential</template>
+            <template #title>当前环境凭据未配置，请先前往凭据管理完成设置</template>
             <template #default>
                 <el-link type="warning" @click.prevent="goCredentialSetting">前往凭据管理</el-link>
             </template>
         </el-alert>
-        <!-- user name -->
         <el-input v-model="ticket.userName" :placeholder="`请输入${fieldLabels.userName}`" clearable show-word-limit
             maxlength="100" />
         <p class="field-error" v-if="validationMessages.userName">{{ validationMessages.userName }}</p>
 
-        <!-- title -->
         <el-input v-model="ticket.title" :placeholder="`请输入${fieldLabels.title}`" clearable show-word-limit
             maxlength="100" />
         <p class="field-error" v-if="validationMessages.title">{{ validationMessages.title }}</p>
 
-        <!-- content -->
         <el-input v-model="ticket.content" type="textarea" :rows="4" :placeholder="`请输入${fieldLabels.content}（支持换行）`"
             clearable show-word-limit maxlength="1000" />
         <p class="field-error" v-if="validationMessages.content">{{ validationMessages.content }}</p>
 
-        <!-- queue -->
         <el-autocomplete v-model="ticket.queue_val" :fetch-suggestions="querySearch"
             :placeholder="`请输入以筛选${fieldLabels.queue_val}`" value-key="queue" clearable>
             <template #default="scope">
@@ -158,25 +145,21 @@ const goCredentialSetting = async () => {
         <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
         <el-link :href="link.href" target="_blank" @click.prevent="electron.openLink(link.href)">{{ link.txt
-        }}</el-link>
+            }}</el-link>
     </el-card>
 </div>
 </template>
 
 <style scoped>
-/* Styles all router links in your application */
 a {
     text-decoration: none;
-    /* Removes the default underline */
     color: #333;
     padding: 10px;
 }
 
-/* Styles on hover */
 a:hover {
     color: #007bff;
     cursor: pointer;
-    /* Ensures the hand cursor appears if not on an anchor tag */
 }
 
 .form-card :deep(.el-card__body) {

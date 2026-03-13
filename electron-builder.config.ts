@@ -56,7 +56,7 @@ if (shouldDisableWindowsSigning) {
 
 const config: Configuration = {
   appId: "com.beingknowing.quick-ticket-to-queue",
-  productName: "quick ticket to queue",
+  productName: "Quick Ticket to Queue",
   asar: true,
   compression: "maximum",
   electronLanguages: ["en-US", "zh-CN"],
