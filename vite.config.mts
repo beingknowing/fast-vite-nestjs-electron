@@ -65,6 +65,9 @@ export default defineConfig({
 
     vue(),
     VitePluginDoubleshot({
+      tsupConfig: {
+        minify: isBuildLifecycle,
+      },
       debugCfg: {
         sourcemapType: isBuildLifecycle ? undefined : "inline",
       },
@@ -88,6 +91,9 @@ export default defineConfig({
         preload: {
           entry: "src/preload/index.ts",
           outDir: "dist/preload",
+          tsupConfig: {
+            minify: isBuildLifecycle,
+          },
         },
       },
     }),

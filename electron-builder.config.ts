@@ -7,7 +7,7 @@ function isWindowsDomainEnvironment(): boolean {
     process.platform === "win32" &&
     Boolean(
       process.env.USERDNSDOMAIN ||
-        (process.env.USERDOMAIN && process.env.USERDOMAIN !== process.env.COMPUTERNAME),
+      (process.env.USERDOMAIN && process.env.USERDOMAIN !== process.env.COMPUTERNAME),
     )
   );
 }
@@ -57,6 +57,8 @@ if (shouldDisableWindowsSigning) {
 const config: Configuration = {
   appId: "com.beingknowing.fast-vite-nestjs-electron",
   asar: true,
+  compression: "maximum",
+  electronLanguages: ["en-US", "zh-CN"],
   directories: {
     output: "build",
   },
@@ -79,6 +81,13 @@ const config: Configuration = {
     "dist/render/**/*",
     "node_modules/**/*",
     "node_modules/.pnpm/**/*",
+    "!**/*.map",
+    "!**/*.md",
+    "!**/*.markdown",
+    "!**/{test,tests,__tests__,example,examples,docs,doc}/**",
+    "!**/tsconfig*.json",
+    "!**/*.d.ts",
+    "!**/*.ts",
   ],
 };
 

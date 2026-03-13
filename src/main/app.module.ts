@@ -14,22 +14,26 @@ import { AppServiceStore } from "./app.service.store";
   imports: [
     ElectronModule.registerAsync({
       useFactory: async () => {
-        const isDev = !app.isPackaged;
+        const isPackaged = app.isPackaged;
         const win = new BrowserWindow({
           width: 1280,
           height: 1024,
-          autoHideMenuBar: false,
+          autoHideMenuBar: isPackaged,
           webPreferences: {
             contextIsolation: true,
             preload: join(__dirname, "../preload/index.js"),
           },
         });
 
+        if (isPackaged) {
+          win.removeMenu();
+        }
+
         win.on("closed", () => {
           win.destroy();
         });
 
-        const URL = isDev
+        const URL = !isPackaged
           ? process.env.DS_RENDERER_URL
           : `file://${join(app.getAppPath(), "dist/render/index.html#/")}`;
 
@@ -42,4 +46,4 @@ import { AppServiceStore } from "./app.service.store";
   controllers: [AppController, AppControllerCredential, AppControllerTicket],
   providers: [AppService, AppServiceOS, AppServiceTicket, AppServiceStore],
 })
-export class AppModule {}
+export class AppModule { }

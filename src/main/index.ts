@@ -83,12 +83,12 @@ function setupAutoUpdater() {
 }
 
 async function electronAppInit() {
-  const isDev = !app.isPackaged;
+  const isPackaged = app.isPackaged;
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();
   });
 
-  if (isDev) {
+  if (!isPackaged) {
     if (process.platform === "win32") {
       process.on("message", (data) => {
         if (data === "graceful-exit") app.quit();
@@ -100,11 +100,13 @@ async function electronAppInit() {
     }
   }
 
-  if (isDev) {
+  if (!isPackaged) {
     // Build application menu with configurable labels
     const menuTemplate = buildMenuTemplate();
     const menu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(menu);
+  } else {
+    Menu.setApplicationMenu(null);
   }
 
   await app.whenReady();
