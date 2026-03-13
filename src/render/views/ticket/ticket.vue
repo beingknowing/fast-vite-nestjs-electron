@@ -4,7 +4,7 @@ import { computed, reactive, ref, onMounted } from 'vue'
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@render/stores/ticket'
-import { CredentialItem } from '@/types/orm_types'
+import { CredentialItem, TicketQueueOption } from '@/types/orm_types'
 import { getEnvTagType } from '@render/utils/env-tag'
 
 // Expose window.electron for template usage
@@ -18,16 +18,7 @@ definePage({
     }
 })
 
-type Option = { des: string; queue: string }
-
-const options: Option[] = [
-    { des: '域名申请、解析', queue: 'GBL-NETWORK DDI' },
-    { des: 'China Support/update L1 KB', queue: 'CHN-WPO-APP SUPPORT' },
-    { des: '本地应用运维', queue: 'CHN-LOCAL APP DEVOPS' },
-    { des: 'China IICS Platform Support Queue and DL', queue: 'CHN-IICS PLATFORM SUPPORT' },
-    { des: 'CHN-DEP NG APPROVAL', queue: 'CHN-DEP NG APPROVAL' },
-    { des: 'VPN相关问题', queue: 'GBL-NETWORK VPN' },
-]
+const options = ref<TicketQueueOption[]>([])
 const ticketStore = useTicketStore()
 const { ticket, validationMessages, isFormValid, result } = storeToRefs(ticketStore)
 const isSubmitting = ref(false);
@@ -36,17 +27,20 @@ const current = reactive<CredentialItem>({
     env: 'pfetst',
 })
 
-onMounted(() => {
-    window.electron.getCurrent().then(curr => {
-        Object.assign(current, curr)
-    })
-    window.electron.getDomainUser()
-        .then(userName => ticketStore.setTicketField('userName', userName))
+onMounted(async () => {
+    const [curr, userName, queueOptions] = await Promise.all([
+        window.electron.getCurrent(),
+        window.electron.getDomainUser(),
+        window.electron.getTicketOptions(),
+    ])
+    Object.assign(current, curr)
+    ticketStore.setTicketField('userName', userName)
+    options.value = queueOptions
 })
 
-const querySearch = (query: string, cb: (results: Option[]) => void) =>
+const querySearch = (query: string, cb: (results: TicketQueueOption[]) => void) =>
     cb(
-        options.filter(
+        options.value.filter(
             (item) =>
                 item.des.toLowerCase().includes(query.toLowerCase()) ||
                 item.queue.toLowerCase().includes(query.toLowerCase()),
@@ -136,7 +130,7 @@ async function submitTicket() {
     <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
     <el-link :href="link.href" target="_blank" @click.prevent="electron.openLink(link.href)">{{ link.txt
-        }}</el-link>
+    }}</el-link>
 </el-card>
 </template>
 

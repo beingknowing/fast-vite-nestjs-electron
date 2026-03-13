@@ -1,6 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import Store from "electron-store";
-import { CredentialState, CredentialItem, TicketResult } from "@/types/orm_types";
+import { CredentialState, CredentialItem, TicketResult, TicketQueueOption } from "@/types/orm_types";
+
+const defaultTicketOptions: TicketQueueOption[] = [
+  { des: "域名申请、解析", queue: "GBL-NETWORK DDI" },
+  { des: "China Support/update L1 KB", queue: "CHN-WPO-APP SUPPORT" },
+  { des: "本地应用运维", queue: "CHN-LOCAL APP DEVOPS" },
+  { des: "China IICS Platform Support Queue and DL", queue: "CHN-IICS PLATFORM SUPPORT" },
+  { des: "CHN-DEP NG APPROVAL", queue: "CHN-DEP NG APPROVAL" },
+  { des: "VPN相关问题", queue: "GBL-NETWORK VPN" },
+];
+
+function cloneDefaultTicketOptions(): TicketQueueOption[] {
+  return defaultTicketOptions.map((item) => ({ ...item }));
+}
 
 function resolveStoreEncryptionKey(): string {
   const key = process.env.ELECTRON_STORE_ENCRYPTION_KEY?.trim();
@@ -83,6 +96,7 @@ export class AppServiceStore {
     return v!;
   }
   private readonly ticketHistoryStoreKey = "ticketHistory";
+  private readonly ticketOptionsStoreKey = "ticketOptions";
   public async saveTicketHistory(item: TicketResult) {
     const history =
       (storeHistories.get(this.ticketHistoryStoreKey) as TicketResult[]) || [];
@@ -101,5 +115,39 @@ export class AppServiceStore {
 
   public async clearTicketHistory(): Promise<void> {
     storeHistories.delete(this.ticketHistoryStoreKey);
+  }
+
+  public async getTicketOptions(): Promise<TicketQueueOption[]> {
+    const options =
+      (storeHistories.get(this.ticketOptionsStoreKey) as TicketQueueOption[]) ||
+      cloneDefaultTicketOptions();
+    return options;
+  }
+
+  public async addTicketOption(item: TicketQueueOption): Promise<void> {
+    const des = item.des?.trim();
+    const queue = item.queue?.trim();
+    if (!des || !queue) return;
+
+    const options = await this.getTicketOptions();
+    if (options.some((v) => v.queue === queue)) return;
+
+    options.unshift({ des, queue });
+    storeHistories.set(this.ticketOptionsStoreKey, options);
+  }
+
+  public async deleteTicketOption(queue: string): Promise<void> {
+    const queueValue = queue?.trim();
+    if (!queueValue) return;
+
+    const options = await this.getTicketOptions();
+    const next = options.filter((item) => item.queue !== queueValue);
+    storeHistories.set(this.ticketOptionsStoreKey, next);
+  }
+
+  public async resetTicketOptions(): Promise<TicketQueueOption[]> {
+    const options = cloneDefaultTicketOptions();
+    storeHistories.set(this.ticketOptionsStoreKey, options);
+    return options;
   }
 }

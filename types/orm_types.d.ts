@@ -28,6 +28,12 @@ export interface TicketResult {
   ticket_link: string; //   `${current.sn_host}/now/sow/record/incident/${result.value.result[0].sys_id}`
   createTime?: string; // "2024-06-17 10:20:30"
 }
+
+export interface TicketQueueOption {
+  des: string;
+  queue: string;
+}
+
 export interface CredentialItem {
   isCurrent?: boolean;
   client_secret?: string;

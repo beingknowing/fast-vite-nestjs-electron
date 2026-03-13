@@ -7,14 +7,20 @@ type PreloadInvokeReturn<T extends IpcChannel, TAsync extends boolean> =
   TAsync extends true ? IpcInvokeReturn<T> : IpcInvokeMap[T]['return']
 
 export const ipcInvoke = {
+  addTicketOption: (...args: IpcInvokeArgs<'add-ticket-option'>): PreloadInvokeReturn<'add-ticket-option', true> =>
+    ipcRenderer.invoke('add-ticket-option', ...args) as unknown as PreloadInvokeReturn<'add-ticket-option', true>,
   clearTicketHistory: (...args: IpcInvokeArgs<'clear-ticket-history'>): PreloadInvokeReturn<'clear-ticket-history', true> =>
     ipcRenderer.invoke('clear-ticket-history', ...args) as unknown as PreloadInvokeReturn<'clear-ticket-history', true>,
   clearCredential: (...args: IpcInvokeArgs<'clearCredential'>): PreloadInvokeReturn<'clearCredential', true> =>
     ipcRenderer.invoke('clearCredential', ...args) as unknown as PreloadInvokeReturn<'clearCredential', true>,
+  deleteTicketOption: (...args: IpcInvokeArgs<'delete-ticket-option'>): PreloadInvokeReturn<'delete-ticket-option', true> =>
+    ipcRenderer.invoke('delete-ticket-option', ...args) as unknown as PreloadInvokeReturn<'delete-ticket-option', true>,
   getDomainUser: (...args: IpcInvokeArgs<'get-domain-user'>): PreloadInvokeReturn<'get-domain-user', true> =>
     ipcRenderer.invoke('get-domain-user', ...args) as unknown as PreloadInvokeReturn<'get-domain-user', true>,
   getTicketHistory: (...args: IpcInvokeArgs<'get-ticket-history'>): PreloadInvokeReturn<'get-ticket-history', true> =>
     ipcRenderer.invoke('get-ticket-history', ...args) as unknown as PreloadInvokeReturn<'get-ticket-history', true>,
+  getTicketOptions: (...args: IpcInvokeArgs<'get-ticket-options'>): PreloadInvokeReturn<'get-ticket-options', true> =>
+    ipcRenderer.invoke('get-ticket-options', ...args) as unknown as PreloadInvokeReturn<'get-ticket-options', true>,
   getCurrent: (...args: IpcInvokeArgs<'getCurrent'>): PreloadInvokeReturn<'getCurrent', true> =>
     ipcRenderer.invoke('getCurrent', ...args) as unknown as PreloadInvokeReturn<'getCurrent', true>,
   msg: (...args: IpcInvokeArgs<'msg'>): PreloadInvokeReturn<'msg', false> =>
@@ -23,6 +29,8 @@ export const ipcInvoke = {
     ipcRenderer.invoke('open-link', ...args) as unknown as PreloadInvokeReturn<'open-link', true>,
   readCredential: (...args: IpcInvokeArgs<'readCredential'>): PreloadInvokeReturn<'readCredential', true> =>
     ipcRenderer.invoke('readCredential', ...args) as unknown as PreloadInvokeReturn<'readCredential', true>,
+  resetTicketOptions: (...args: IpcInvokeArgs<'reset-ticket-options'>): PreloadInvokeReturn<'reset-ticket-options', true> =>
+    ipcRenderer.invoke('reset-ticket-options', ...args) as unknown as PreloadInvokeReturn<'reset-ticket-options', true>,
   saveTicketHistory: (...args: IpcInvokeArgs<'save-ticket-history'>): PreloadInvokeReturn<'save-ticket-history', true> =>
     ipcRenderer.invoke('save-ticket-history', ...args) as unknown as PreloadInvokeReturn<'save-ticket-history', true>,
   saveCredential: (...args: IpcInvokeArgs<'saveCredential'>): PreloadInvokeReturn<'saveCredential', true> =>
