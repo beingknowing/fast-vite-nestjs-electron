@@ -55,7 +55,7 @@ if (shouldDisableWindowsSigning) {
 }
 
 const config: Configuration = {
-  appId: "com.beingknowing.quick-ticket-to-queue",
+  appId: "com.beingknowing.quickticket2queue",
   productName: "Quick Ticket to Queue",
   asar: true,
   compression: "maximum",
@@ -67,7 +67,7 @@ const config: Configuration = {
   npmRebuild: true,
   win: {
     target: ["portable"],
-    executableName: "quick-ticket-to-queue",
+    executableName: "quickticket2queue",
     signAndEditExecutable: !shouldDisableWindowsSigning,
     icon: "logo.png",
   },
