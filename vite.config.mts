@@ -15,6 +15,10 @@ import IconsResolver from "unplugin-icons/resolver";
 const electronPublishMode =
   process.env.ELECTRON_BUILDER_PUBLISH === "always" ? "always" : "never";
 
+const lifecycleEvent = process.env.npm_lifecycle_event;
+const isBuildLifecycle = lifecycleEvent === "build";
+const rendererSourcemap: "inline" | false = isBuildLifecycle ? false : "inline";
+
 // https://vitejs.dev/config/
 export default defineConfig({
   root: join(__dirname, "src/render"),
@@ -61,6 +65,9 @@ export default defineConfig({
 
     vue(),
     VitePluginDoubleshot({
+      debugCfg: {
+        sourcemapType: isBuildLifecycle ? undefined : "inline",
+      },
       waitTimeout: 50_000, // 等待主进程启动的超时时间，单位为毫秒
       type: "electron",
       main: "dist/main/index.js",
@@ -94,7 +101,7 @@ export default defineConfig({
   },
   base: "./",
   build: {
-    sourcemap: process.env.npm_lifecycle_event !== "build",
+    sourcemap: rendererSourcemap,
     outDir: join(__dirname, "dist/render"),
     emptyOutDir: true,
     rollupOptions: {
