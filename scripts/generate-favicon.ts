@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const projectRoot = join(__dirname, '..')
 const sourcePath = join(projectRoot, 'logo.png')
 const publicDir = join(projectRoot, 'src', 'render', 'public')
-const buildDir = join(projectRoot, 'build', 'icons')
+const buildDir = join(projectRoot, 'assets', 'icons')
 
 async function generateFavicon() {
     try {
