@@ -3,7 +3,7 @@
   <el-table :data="tableData" border row-key="sn_host">
     <el-table-column label="Cur">
       <template #default="{ row }">
-        <el-radio v-model="currentKey" :label="row.sn_host" @change="() => setCurrent(row.sn_host)"></el-radio>
+        <el-radio v-model="currentKey" :label="row.env" @change="() => setCurrent(row.env)"></el-radio>
       </template>
     </el-table-column>
 

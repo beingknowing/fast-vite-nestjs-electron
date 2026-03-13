@@ -7,7 +7,7 @@ import {
   ClientCredential,
   TicketResponse,
   TicketType,
-} from "../../types/orm_types";
+} from "@/types/orm_types";
 import { AppServiceOS } from "./app.service.os";
 import { AppServiceStore } from "./app.service.store";
 

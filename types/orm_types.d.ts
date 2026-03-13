@@ -34,6 +34,7 @@ export interface CredentialItem {
   client_id?: string;
   sn_host?: string;
   editing?: boolean;
+  env: 'pfetst' | 'pfestg' | 'pfeprod'
 }
 
 export interface CredentialState {

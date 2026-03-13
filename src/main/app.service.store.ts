@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import Store from "electron-store";
-import { CredentialState, TicketResult } from "../../types/orm_types";
+import { CredentialState, CredentialItem, TicketResult } from "@/types/orm_types";
 
 function resolveStoreEncryptionKey(): string {
   const key = process.env.ELECTRON_STORE_ENCRYPTION_KEY?.trim();
@@ -21,8 +21,12 @@ const storeHistories = new Store({
 @Injectable()
 export class AppServiceStore {
 
+  private readonly envs: CredentialItem['env'][] = ['pfetst', 'pfestg', 'pfeprod']
   private readonly credentialStoreKey = "credential";
   public async saveCredential(data: CredentialState): Promise<true> {
+    data.tableData.forEach(item => {
+      item.env = this.envs.find(v => item.sn_host?.includes(v)) ?? 'pfetst'
+    })
     storeCredential.set(this.credentialStoreKey, data);
     return true;
   }
@@ -32,9 +36,11 @@ export class AppServiceStore {
       "🚀 ~ AppServiceStore ~ readCredential ~  store.path:",
       storeCredential.path,
     );
-    const credential = (storeCredential.get(
-      this.credentialStoreKey,
-    ) as CredentialState) || {
+
+    const credential = storeCredential.get(this.credentialStoreKey)
+    if (credential)
+      return credential as CredentialState;
+    const def: CredentialState = {
       tableData: [
         {
           client_secret: "",
@@ -42,8 +48,10 @@ export class AppServiceStore {
           sn_host: "https://pfetst.service-now.com",
           isCurrent: true,
           editing: false,
+          env: 'pfetst'
         },
         {
+          env: 'pfestg',
           client_secret: "",
           client_id: "",
           sn_host: "https://pfestg.service-now.com",
@@ -51,6 +59,7 @@ export class AppServiceStore {
           editing: false,
         },
         {
+          env: 'pfeprod',
           client_secret: "",
           client_id: "",
           sn_host: "https://pfeprod.service-now.com",
@@ -59,14 +68,14 @@ export class AppServiceStore {
         },
       ],
     };
-    return credential;
+    return def
   }
 
   public async getCurrent() {
     const all = await this.readCredential();
     const v =
       all.tableData.find((i) => i.isCurrent) ??
-      all.tableData.find((i) => i.sn_host == "https://pfestg.service-now.com");
+      all.tableData.find((i) => i.env == 'pfetst');
     return v!;
   }
   private readonly ticketHistoryStoreKey = "ticketHistory";

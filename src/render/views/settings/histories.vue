@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { TicketResult } from '../../../../types/orm_types';
+import { TicketResult } from '@/types/orm_types';
 
 definePage({
   meta: {

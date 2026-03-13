@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { TicketResponse, TicketType } from "../../../../types/orm_types";
+import { TicketResponse, TicketType } from "@/types/orm_types";
 import { computed, reactive, ref, toRaw } from "vue";
 
 export const fieldLabels = {

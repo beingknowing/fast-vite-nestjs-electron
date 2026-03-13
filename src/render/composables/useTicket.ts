@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { TicketResponse, TicketType } from '../../../types/orm_types'
+import { TicketResponse, TicketType } from '../@/types/orm_types'
 import { toRaw } from 'vue'
 import { ipcChannels, typedInvoke } from '../ipc'
 

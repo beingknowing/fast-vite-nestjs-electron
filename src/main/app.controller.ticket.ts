@@ -5,7 +5,7 @@ import type {
   TicketResponse,
   TicketResult,
   TicketType,
-} from "../../types/orm_types";
+} from "@/types/orm_types";
 import { AppServiceTicket } from "./app.service.ticket";
 import { AppServiceOS } from "./app.service.os";
 import { AppServiceStore } from "./app.service.store";

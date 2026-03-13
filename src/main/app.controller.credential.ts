@@ -4,7 +4,7 @@ import { Controller } from "@nestjs/common";
 import { Payload } from "@nestjs/microservices";
 import { AppService } from "./app.service";
 import { AppServiceStore } from "./app.service.store";
-import type { CredentialItem, CredentialState } from "../../types/orm_types";
+import type { CredentialItem, CredentialState } from "@/types/orm_types";
 
 @Controller()
 export class AppControllerCredential {

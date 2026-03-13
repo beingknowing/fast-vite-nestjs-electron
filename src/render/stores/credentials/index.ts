@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { CredentialState, CredentialItem } from '../../../../types/orm_types'
+import { CredentialState, CredentialItem } from '@/types/orm_types'
 
 
 export const useCredentialStore = defineStore('credential', {
@@ -19,9 +19,9 @@ export const useCredentialStore = defineStore('credential', {
     },
 
     actions: {
-        setCurrent(sn_host: CredentialItem['sn_host']) {
+        setCurrent(env: CredentialItem['env']) {
             this.tableData.forEach((r) => {
-                r.isCurrent = r.sn_host === sn_host
+                r.isCurrent = r.env === env
             })
         },
 

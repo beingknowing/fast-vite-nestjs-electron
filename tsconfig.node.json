@@ -13,6 +13,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
+      "@/*": [
+        "./*"
+      ],
       "@render/*": [
         "src/render/*"
       ],
