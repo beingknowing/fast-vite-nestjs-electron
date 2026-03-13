@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, reactive, ref, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
 // Explicit .vue extension ensures module resolution consistency across environments
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@render/stores/ticket'
-import { CredentialItem } from '@render/types/orm_types'
+import { CredentialItem } from '@/types/orm_types'
+import { getEnvTagType } from '@render/utils/env-tag'
 
 // Expose window.electron for template usage
 const electron = window.electron;
@@ -33,15 +33,12 @@ const { ticket, validationMessages, isFormValid, result } = storeToRefs(ticketSt
 const isSubmitting = ref(false);
 // console.log("🚀 ~ isSubmitting:", isSubmitting);
 const current = reactive<CredentialItem>({
-    sn_host: 'test',
+    env: 'pfetst',
 })
 
 onMounted(() => {
     window.electron.getCurrent().then(curr => {
         Object.assign(current, curr)
-
-        // console.log("🚀 ~ current:", current)
-        // console.log("🚀 ~ curr:", curr)
     })
     window.electron.getDomainUser()
         .then(userName => ticketStore.setTicketField('userName', userName))
@@ -80,16 +77,36 @@ const enableSubmitBtn = computed(() => {
 
 })
 
+const submitErrorMessage = ref('')
+
+function showSubmitError(message: string) {
+    submitErrorMessage.value = message
+    setTimeout(() => {
+        submitErrorMessage.value = ''
+    }, 2500)
+}
+
 async function submitTicket() {
     const errorMessage = await ticketStore.submitTicket()
     if (errorMessage) {
-        ElMessage.error(errorMessage)
+        showSubmitError(errorMessage)
     }
 }
 
 </script>
-<template><el-card class="form-card">
-    <el-text class="mx-1" type="primary"> Host:{{ current.sn_host }}</el-text>
+<template>
+<Teleport to="body">
+    <div v-if="submitErrorMessage" class="global-toast">
+        <el-alert :title="submitErrorMessage" type="error" show-icon :closable="false" />
+    </div>
+</Teleport>
+
+<el-card class="form-card">
+    <div class="host-row">
+        <el-text type="primary">Env:</el-text>
+        <el-tag :type="getEnvTagType(current.env)">{{ current.env }}</el-tag>
+        <el-text type="primary">Host: {{ current.sn_host }}</el-text>
+    </div>
     <!-- user name -->
     <el-input v-model="ticket.userName" :placeholder="`请输入${fieldLabels.userName}`" clearable show-word-limit
         maxlength="100" />
@@ -120,7 +137,8 @@ async function submitTicket() {
 
     <el-link :href="link.href" target="_blank" @click.prevent="electron.openLink(link.href)">{{ link.txt
         }}</el-link>
-</el-card></template>
+</el-card>
+</template>
 
 <style scoped>
 /* Styles all router links in your application */
@@ -171,6 +189,21 @@ a:hover {
 .submit-row {
     display: flex;
     justify-content: flex-end;
+}
+
+.host-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.global-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    min-width: 300px;
 }
 
 .field-error {

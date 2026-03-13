@@ -71,6 +71,10 @@ export class AppServiceStore {
     return def
   }
 
+  public async clearCredential(): Promise<void> {
+    storeCredential.delete(this.credentialStoreKey);
+  }
+
   public async getCurrent() {
     const all = await this.readCredential();
     const v =

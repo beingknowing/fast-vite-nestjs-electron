@@ -18,6 +18,9 @@ const electronPublishMode =
 // https://vitejs.dev/config/
 export default defineConfig({
   root: join(__dirname, "src/render"),
+  server: {
+    hmr: true,
+  },
   plugins: [
     VueRouter({
       routesFolder: ["src/render/views"], // 扫描页面的目录

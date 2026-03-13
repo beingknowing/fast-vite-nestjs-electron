@@ -11,16 +11,22 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTag: typeof import('element-plus/es')['ElTag']
     ElText: typeof import('element-plus/es')['ElText']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface GlobalDirectives {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

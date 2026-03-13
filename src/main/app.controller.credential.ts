@@ -12,7 +12,7 @@ export class AppControllerCredential {
     _appService: AppService,
     @Window() _mainWin: BrowserWindow,
     private readonly store: AppServiceStore,
-  ) {}
+  ) { }
 
   @IpcHandle("saveCredential")
   public async saveCredential(@Payload() data: CredentialState): Promise<true> {
@@ -25,6 +25,12 @@ export class AppControllerCredential {
 
     return credential;
   }
+
+  @IpcHandle("clearCredential")
+  public async clearCredential(): Promise<void> {
+    await this.store.clearCredential();
+  }
+
   @IpcHandle("getCurrent")
   public async getCurrent(): Promise<CredentialItem> {
     const item = this.store.getCurrent();

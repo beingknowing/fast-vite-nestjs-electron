@@ -7,6 +7,10 @@ export interface IpcInvokeMap {
     params: []
     return: Promise<void>
   }
+  'clearCredential': {
+    params: []
+    return: Promise<void>
+  }
   'get-domain-user': {
     params: []
     return: Promise<string>
