@@ -70,7 +70,7 @@ export default defineConfig({
       ],
       electron: {
         build: {
-          config: "./electron-builder.config.js",
+          config: "./electron-builder.config.ts",
           cliOptions: {
             publish: electronPublishMode,
           },
