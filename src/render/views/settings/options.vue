@@ -24,7 +24,11 @@
 
     <el-table :data="options" border row-key="queue" v-loading="loading" empty-text="暂无队列配置">
         <el-table-column prop="des" label="描述" min-width="220" show-overflow-tooltip />
-        <el-table-column prop="queue" label="队列" min-width="220" show-overflow-tooltip />
+        <el-table-column label="队列" min-width="220" show-overflow-tooltip>
+            <template #default="{ row }">
+                <el-link type="primary" @click.prevent="jumpToTicket(row.queue)">{{ row.queue }}</el-link>
+            </template>
+        </el-table-column>
         <el-table-column label="操作" width="90">
             <template #default="{ row }">
                 <el-button type="danger" @click="handleDelete(row.queue)">删除</el-button>
@@ -36,6 +40,7 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import type { TicketQueueOption } from '@/types/orm_types'
 
 definePage({
@@ -52,6 +57,7 @@ definePage({
 const options = ref<TicketQueueOption[]>([])
 const loading = ref(false)
 const adding = ref(false)
+const router = useRouter()
 
 const newOption = reactive<TicketQueueOption>({
     des: '',
@@ -108,6 +114,10 @@ const handleReset = async () => {
     await window.electron.resetTicketOptions()
     await loadOptions()
     showNotice('success', '已恢复默认列表')
+}
+
+const jumpToTicket = async (queue: string) => {
+    await router.push({ path: '/ticket/ticket', query: { queue } })
 }
 
 onMounted(loadOptions)

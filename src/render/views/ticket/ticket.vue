@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, onMounted } from 'vue'
 // Explicit .vue extension ensures module resolution consistency across environments
+import { useRoute } from 'vue-router'
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@render/stores/ticket'
@@ -9,6 +10,7 @@ import { getEnvTagType } from '@render/utils/env-tag'
 
 // Expose window.electron for template usage
 const electron = window.electron;
+const route = useRoute()
 
 definePage({
     meta: {
@@ -36,6 +38,12 @@ onMounted(async () => {
     Object.assign(current, curr)
     ticketStore.setTicketField('userName', userName)
     options.value = queueOptions
+
+    const queryQueue = route.query.queue
+    const queueValue = Array.isArray(queryQueue) ? queryQueue[0] : queryQueue
+    if (typeof queueValue === 'string' && queueValue.trim()) {
+        ticketStore.setTicketField('queue_val', queueValue.trim())
+    }
 })
 
 const querySearch = (query: string, cb: (results: TicketQueueOption[]) => void) =>
@@ -130,7 +138,7 @@ async function submitTicket() {
     <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
     <el-link :href="link.href" target="_blank" @click.prevent="electron.openLink(link.href)">{{ link.txt
-    }}</el-link>
+        }}</el-link>
 </el-card>
 </template>
 
