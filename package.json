@@ -12,6 +12,7 @@
     "dev": "rimraf dist && vite",
     "debug": "rimraf dist && vite -- --dsb-debug",
     "build": "rimraf dist && vite build",
+    "pack:win:portable": "pnpm build && electron-builder --win portable",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "electron-builder install-app-deps"

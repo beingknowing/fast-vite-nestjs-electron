@@ -63,6 +63,7 @@ const config: Configuration = {
   ...getPublishConfig(),
   npmRebuild: true,
   win: {
+    target: ["portable"],
     signAndEditExecutable: !shouldDisableWindowsSigning,
     icon: "logo.png",
   },
