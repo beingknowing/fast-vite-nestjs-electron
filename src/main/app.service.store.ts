@@ -20,7 +20,7 @@ const storeHistories = new Store({
 });
 @Injectable()
 export class AppServiceStore {
-  [x: string]: any;
+
   private readonly credentialStoreKey = "credential";
   public async saveCredential(data: CredentialState): Promise<true> {
     storeCredential.set(this.credentialStoreKey, data);
@@ -64,7 +64,7 @@ export class AppServiceStore {
 
   public async getCurrent() {
     const all = await this.readCredential();
-    let v =
+    const v =
       all.tableData.find((i) => i.isCurrent) ??
       all.tableData.find((i) => i.sn_host == "https://pfestg.service-now.com");
     return v!;

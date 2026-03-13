@@ -25,12 +25,12 @@ export class AppServiceTicket {
   }
   public async getToken() {
     return this.getCurrent().then(async (current) => {
-      var data = qs.stringify({
+      const data = qs.stringify({
         grant_type: "client_credentials",
         client_secret: current.client_secret,
         client_id: current.client_id,
       });
-      var config = {
+      const config = {
         method: "post",
         url: `${current.sn_host}/oauth_token.do`,
         headers: {
@@ -56,8 +56,8 @@ export class AppServiceTicket {
 
   public async submitTicket(userInput: TicketType) {
     console.log("🚀 ~ AppServiceTicket ~ submitTicket ~ userInput:", userInput);
-    let client_credentials = await this.getToken();
-    var data = JSON.stringify({
+    const client_credentials = await this.getToken();
+    const data = JSON.stringify({
       u_caller_id: this.appServiceOS.getUserName(),
       u_pfe_requested_by: userInput.userName,
       u_short_description: userInput.title,
@@ -73,7 +73,7 @@ export class AppServiceTicket {
     });
     // console.log("🚀 ~ AppServiceTicket ~ submitTicket ~ data:", data);
     return await this.getCurrent().then(async (current) => {
-      var config = {
+      const config = {
         method: "post",
         url: `${current.sn_host}/api/now/import/u_create_incident_inbound`,
         headers: {

@@ -6,7 +6,7 @@ export default {
   ...ipcInvoke,
   sendMsg: ipcInvoke.msg,
   readCredential: ipcInvoke.readCredential,
-  onReplyMsg: (cb: (msg: string) => any) => ipcRenderer.on('reply-msg', (...args: [unknown, string]) => {
+  onReplyMsg: (cb: (msg: string) => void) => ipcRenderer.on('reply-msg', (...args: [unknown, string]) => {
     cb(args[1])
   }),
 }
