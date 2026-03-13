@@ -50,7 +50,7 @@ definePage({
         parent: '/settings',
         parentLabel: '设置',
         parentOrder: 3,
-        order: 202,
+        order: 88,
     }
 })
 
