@@ -6,9 +6,7 @@
   "author": "calmripple",
   "main": "dist/main/index.js",
   "scripts": {
-    "gen:ipc-types": "tsx scripts/generate-ipc-types.ts",
-    "gen:preload-api": "tsx scripts/generate-preload-api.ts",
-    "gen:ipc": "pnpm gen:ipc-types && pnpm gen:preload-api",
+    "gen:ipc": "tsx scripts/generate-ipc-methods.ts",
     "dev": "rimraf dist && vite",
     "debug": "rimraf dist && vite -- --dsb-debug",
     "build": "rimraf dist && vite build",

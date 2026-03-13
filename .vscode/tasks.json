@@ -4,7 +4,7 @@
         {
             "label": "watch: gen:ipc (src/main)",
             "type": "shell",
-            "command": "pnpm dlx chokidar-cli \"src/main/**/*.ts\" -c \"pnpm gen:ipc\" --debounce 1000",
+            "command": "pnpm dlx chokidar-cli \"src/main/**/*.ts\" -c \"if /I \"\"{event}\"\"==\"\"change\"\" pnpm gen:ipc\" --debounce 1000",
             "isBackground": true,
             "runOptions": {
                 "runOn": "folderOpen"

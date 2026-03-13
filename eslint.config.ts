@@ -8,7 +8,7 @@ import type { Linter } from "eslint";
 
 const autoImportEslintGlobals = (
   JSON.parse(
-    readFileSync(new URL("./types/.eslintrc-auto-import.json", import.meta.url), "utf8"),
+    readFileSync(new URL("./types/auto-gen/.eslintrc-auto-import.json", import.meta.url), "utf8"),
   ) as { globals: Record<string, boolean> }
 ).globals;
 

@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import { ipcInvoke } from './electron.ipc-auto'
+import { ipcInvoke } from './auto-gen/electron.ipc-auto'
 
 export default {
   ipcRenderer,

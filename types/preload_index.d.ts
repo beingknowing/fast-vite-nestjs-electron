@@ -1,6 +1,6 @@
 import type { IpcRenderer } from 'electron'
 import type electron from '@/src/preload/electron'
-import type { IpcChannel, IpcInvokeArgs, IpcInvokeReturn } from '@/types/ipc-methods'
+import type { IpcChannel, IpcInvokeArgs, IpcInvokeReturn } from '@/types/auto-gen/ipc-methods'
 
 type TypedIpcRenderer = Omit<IpcRenderer, 'invoke'> & {
   invoke<TChannel extends IpcChannel>(channel: TChannel, ...args: IpcInvokeArgs<TChannel>): IpcInvokeReturn<TChannel>

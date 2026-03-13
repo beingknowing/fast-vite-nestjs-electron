@@ -21,7 +21,7 @@ export default defineConfig({
   plugins: [
     VueRouter({
       routesFolder: ["src/render/views"], // 扫描页面的目录
-      dts: "src/route-map.d.ts", // 自动生成类型定义文件
+      dts: "types/auto-gen/route-map.d.ts", // 自动生成类型定义文件
       exclude: ["**/_layout.vue"], // 排除 layout 文件
     }),
     AutoImport({
@@ -29,10 +29,10 @@ export default defineConfig({
       imports: ["vue", VueRouterAutoImports, "pinia"],
       eslintrc: {
         enabled: true, // Default `false`
-        filepath: "types/.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
+        filepath: "types/auto-gen/.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
         globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
       },
-      dts: join(__dirname, "types/auto-imports.d.ts"),
+      dts: join(__dirname, "types/auto-gen/auto-imports.d.ts"),
       resolvers: [
         ElementPlusResolver(),
         // 自动导入图标组件
@@ -49,7 +49,7 @@ export default defineConfig({
           enabledCollections: ["ep"],
         }),
       ],
-      dts: join(__dirname, "types/components.d.ts"),
+      dts: join(__dirname, "types/auto-gen/components.d.ts"),
     }),
     //图标的导入配置
     Icons({
