@@ -2,6 +2,7 @@
 import { computed, reactive, ref, onMounted } from 'vue'
 // Explicit .vue extension ensures module resolution consistency across environments
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import { storeToRefs } from 'pinia'
 import { useTicketStore, fieldLabels } from '@render/stores/ticket'
@@ -11,6 +12,7 @@ import { getEnvTagType } from '@render/utils/env-tag'
 // Expose window.electron for template usage
 const electron = window.electron;
 const route = useRoute()
+const router = useRouter()
 
 definePage({
     meta: {
@@ -28,6 +30,7 @@ const isSubmitting = ref(false);
 const current = reactive<CredentialItem>({
     env: 'pfetst',
 })
+const credentialReady = ref(true)
 
 onMounted(async () => {
     const [curr, userName, queueOptions] = await Promise.all([
@@ -36,6 +39,11 @@ onMounted(async () => {
         window.electron.getTicketOptions(),
     ])
     Object.assign(current, curr)
+    credentialReady.value = Boolean(
+        curr.client_id?.trim() &&
+        curr.client_secret?.trim() &&
+        curr.sn_host?.trim(),
+    )
     ticketStore.setTicketField('userName', userName)
     options.value = queueOptions
 
@@ -75,7 +83,7 @@ const link = computed(() =>
 const enableSubmitBtn = computed(() => {
     // console.log("🚀 ~ isFormValid.value:", isFormValid.value)
     // console.log("🚀 ~ !isSubmitting.value:", !isSubmitting.value)
-    return isFormValid.value && !isSubmitting.value
+    return credentialReady.value && isFormValid.value && !isSubmitting.value
 
 })
 
@@ -95,6 +103,10 @@ async function submitTicket() {
     }
 }
 
+const goCredentialSetting = async () => {
+    await router.push('/settings/credentials')
+}
+
 </script>
 <template>
 <div class="ticket-page-root">
@@ -110,6 +122,13 @@ async function submitTicket() {
             <el-tag :type="getEnvTagType(current.env)">{{ current.env }}</el-tag>
             <el-text type="primary">Host: {{ current.sn_host }}</el-text>
         </div>
+
+        <el-alert v-if="!credentialReady" type="warning" show-icon :closable="false">
+            <template #title>当前凭据未配置，请先前往凭据管理设置 credential</template>
+            <template #default>
+                <el-link type="warning" @click.prevent="goCredentialSetting">前往凭据管理</el-link>
+            </template>
+        </el-alert>
         <!-- user name -->
         <el-input v-model="ticket.userName" :placeholder="`请输入${fieldLabels.userName}`" clearable show-word-limit
             maxlength="100" />
@@ -139,7 +158,7 @@ async function submitTicket() {
         <div style="margin-bottom: 8px; font-weight: 600;"></div>
 
         <el-link :href="link.href" target="_blank" @click.prevent="electron.openLink(link.href)">{{ link.txt
-            }}</el-link>
+        }}</el-link>
     </el-card>
 </div>
 </template>
