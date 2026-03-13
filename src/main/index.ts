@@ -8,7 +8,7 @@ import { buildMenuTemplate } from "./buildMenuTemplate";
 import 'reflect-metadata';
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 
-const DEFAULT_GITHUB_REPOSITORY = "beingknowing/fast-vite-nestjs-electron";
+const DEFAULT_GITHUB_REPOSITORY = "cnjimbo/QuickTicket2Queue";
 
 function isPortableWindowsBuild(): boolean {
   return process.platform === "win32" && Boolean(process.env.PORTABLE_EXECUTABLE_FILE);

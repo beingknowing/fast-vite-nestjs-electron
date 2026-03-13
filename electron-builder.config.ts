@@ -1,6 +1,6 @@
 import type { Configuration } from "electron-builder";
 
-const DEFAULT_GITHUB_REPOSITORY = "beingknowing/fast-vite-nestjs-electron";
+const DEFAULT_GITHUB_REPOSITORY = "cnjimbo/QuickTicket2Queue";
 
 function isWindowsDomainEnvironment(): boolean {
   return (
@@ -14,7 +14,7 @@ function isWindowsDomainEnvironment(): boolean {
 
 function getGitHubRepository(): { owner: string; repo: string } {
   const rawRepository = process.env.GITHUB_REPOSITORY || DEFAULT_GITHUB_REPOSITORY;
-  const [owner = "beingknowing", repo = "fast-vite-nestjs-electron"] = rawRepository.split("/");
+  const [owner = "cnjimbo", repo = "QuickTicket2Queue"] = rawRepository.split("/");
   return { owner, repo };
 }
 
