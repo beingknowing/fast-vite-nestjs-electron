@@ -55,7 +55,8 @@ if (shouldDisableWindowsSigning) {
 }
 
 const config: Configuration = {
-  appId: "com.beingknowing.fast-vite-nestjs-electron",
+  appId: "com.beingknowing.quick-ticket-to-queue",
+  productName: "quick ticket to queue",
   asar: true,
   compression: "maximum",
   electronLanguages: ["en-US", "zh-CN"],
@@ -66,6 +67,7 @@ const config: Configuration = {
   npmRebuild: true,
   win: {
     target: ["portable"],
+    executableName: "quick-ticket-to-queue",
     signAndEditExecutable: !shouldDisableWindowsSigning,
     icon: "logo.png",
   },

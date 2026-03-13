@@ -1,5 +1,6 @@
 {
-  "name": "fast-vite-nestjs-electron",
+  "name": "quick-ticket-to-queue",
+  "productName": "quick ticket to queue",
   "version": "0.0.2",
   "packageManager": "pnpm@10.29.3",
   "description": "Vite + Electron with Doubleshot, so fast! ⚡",

@@ -15,10 +15,12 @@ import { AppServiceStore } from "./app.service.store";
     ElectronModule.registerAsync({
       useFactory: async () => {
         const isPackaged = app.isPackaged;
+        const devIconPath = join(process.cwd(), "logo.png");
         const win = new BrowserWindow({
           width: 1280,
           height: 1024,
           autoHideMenuBar: isPackaged,
+          icon: !isPackaged ? devIconPath : undefined,
           webPreferences: {
             contextIsolation: true,
             preload: join(__dirname, "../preload/index.js"),
