@@ -73,9 +73,14 @@ const config: Configuration = {
   },
   mac: {
     target: ["zip"],
+    icon: "build/icons/icon-512.png",
+    category: "public.app-category.productivity",
   },
   linux: {
     target: ["AppImage"],
+    icon: "build/icons/icon-256.png",
+    category: "Utility",
+    maintainer: "cnjimbo",
   },
   files: [
     "dist/main/**/*",
